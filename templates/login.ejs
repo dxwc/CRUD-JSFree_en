@@ -1,0 +1,56 @@
+<html>
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>Login</title>
+</head>
+<body>
+<? if(typeof(locals.error) === 'string') { ?>
+    <p style='font-style: italic; color: red;'><?= error ?></p>
+<? } ?>
+
+<? if(locals.is_logged_in === true) { ?>
+    <p>You are logged in</p>
+<? } else if(locals.captcha_svg) { ?>
+<form action='/login' method='post'>
+    <div>
+        <label for='username'>Username</label>
+        <input
+            name='username'
+            type='text'
+            placeholder='username'
+            minlength='3'
+            maxlength='15'
+            required>
+    </div>
+    <div>
+        <label for='password'>Password</label>
+        <input
+            name='password'
+            type='password'
+            placeholder='password'
+            minlength='3'
+            required>
+    </div>
+    <div>
+        <label for='captcha_solved'>Enter the security code</label>
+        <?- captcha_svg ?>
+        <input
+            name='captcha_solved'
+            type='text'
+            placeholder='code'
+            minlength='1'
+            required>
+    </div>
+    <div>
+        <button type='submit'>Submit</button>
+    </div>
+</form>
+<? } else { ?>
+    <i style='color: red'>
+        Error loading security captcah, retry or contact admin.
+    </i>
+<? } ?>
+
+</body>
+</html>

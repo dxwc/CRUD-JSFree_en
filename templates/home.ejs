@@ -1,0 +1,26 @@
+<html>
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>Home</title>
+</head>
+<body>
+
+<? if(typeof(locals.list) !== 'object') { ?>
+    <i style='color: red'>Error, rendering list of posts, contact admin.</i>
+<? } else if(locals.list.length === 0) { ?>
+    <p>There seems to be no posts to show</p>
+<? } else { ?>
+    <? list.forEach((post) => { ?>
+        <a href='/post/<?= post.id ?>'><?= post.title ?></a>
+    <? }); ?>
+<? } ?>
+
+
+<? if(locals.is_logged_in === true) { ?>
+    Logged in
+<? } else { ?>
+    Not Logged in
+<? } ?>
+</body>
+</html>
