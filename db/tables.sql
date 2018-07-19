@@ -5,7 +5,7 @@ CREATE TABLE people
     id     TEXT PRIMARY KEY, -- uuid v4
     u_name TEXT NOT NULL UNIQUE,
     u_pass TEXT NOT NULL,
-    joined INT, -- unix time
+    joined INT NOT NULL, -- unix time
     marker SMALLINT -- any special marker might there any need arises later
 );
 
@@ -15,7 +15,7 @@ CREATE TABLE submission
     posted_by TEXT REFERENCES people(id),
     title     TEXT NOT NULL,
     content   TEXT,
-    published INT, -- unix time
+    published INT NOT NULL, -- unix time
     marker    SMALLINT -- markers such as reported, link post, text only post etc
 );
 
@@ -26,7 +26,7 @@ CREATE TABLE comment
     parent      TEXT NOT NULL,
     posted_by   TEXT REFERENCES people(id),
     content     TEXT NOT NULL,
-    published   INT -- unix time
+    published   INT NOT NULL -- unix time
 );
 
 CREATE TABLE report
@@ -35,7 +35,7 @@ CREATE TABLE report
     reported_id   TEXT NOT NULL, -- post or comment id
     reported_type BOOLEAN NOT NULL, -- post or comment being reported
     posted_by     TEXT REFERENCES people(id),
-    published     INT, -- for user
+    published     INT NOT NULL, -- for user
     content       TEXT NOT NULL, -- for user
     marker        SMALLINT, -- for user
     reaction      SMALLINT, -- for admin
