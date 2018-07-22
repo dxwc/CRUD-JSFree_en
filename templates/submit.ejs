@@ -1,0 +1,63 @@
+<html>
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>Sign Up</title>
+</head>
+<body>
+<? if(typeof(locals.error) === 'string') { ?>
+    <p style='font-style: italic; color: red;'><?= error ?></p>
+<? } ?>
+
+<? if(locals.is_logged_in === true) { ?>
+    <? if(locals.captcha_svg) { ?>
+    <form action='/submit' method='post'>
+        <div>
+            <label for='title'>Title</label>
+            <input
+                name='title'
+                type='text'
+                placeholder='Title of the post'
+                value='<?=
+                    locals.data !== undefined &&
+                    typeof(locals.data.title) === 'string' ?
+                        data.title : `` ?>'
+                required>
+        </div>
+        <div>
+            <label for='description'>Description</label>
+        </div>
+        <div>
+            <textarea
+                name='description'
+                placeholder='One link or body text'
+                required><?=
+                locals.data !== undefined &&
+                typeof(locals.data.description) === 'string' ?
+                    data.description : `` ?></textarea>
+        </div>
+        <div>
+            <label for='captcha_solved'>Enter the security code</label>
+            <?- captcha_svg ?>
+            <input
+                name='captcha_solved'
+                type='text'
+                placeholder='code'
+                minlength='1'
+                required>
+        </div>
+        <div>
+            <button type='submit'>Submit</button>
+        </div>
+    </form>
+    <? } else { ?>
+        <i style='color: red'>
+            Error loading security captcah, retry or contact admin.
+        </i>
+    <? } ?>
+<? } else { ?>
+    You must be logged in to submit a post on this website.
+<? } ?>
+
+</body>
+</html>

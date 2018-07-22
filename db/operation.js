@@ -6,6 +6,7 @@ let uuid = require('uuid');
 
 function get_home_page_list()
 {
+    // TODO: Join to get user's name
     return db.query(`SELECT * FROM submission ORDER BY published limit 20`)
     .then((res) =>
     {
@@ -37,7 +38,7 @@ function sign_up(username, password)
             '${uuid.v4()}',
             '${val.escape(username)}',
             '${val.escape(password)}',
-            ${new Date().getTime() / 1000}
+            ${Math.round(new Date().getTime() / 1000)}
         )
         RETURNING id
         `
@@ -71,6 +72,39 @@ function login(username, password)
     });
 }
 
+function submit(title, description, u_id)
+{
+    // TODO: detect if description is link, if so save as such with marker
+
+    return db.one
+    (
+        `
+        INSERT INTO submission
+        (
+            id,
+            posted_by,
+            title,
+            content,
+            published
+        )
+        VALUES
+        (
+            '${uuid.v4()}',
+            '${u_id}',
+            '${val.escape(title)}',
+            '${val.escape(description)}',
+            '${Math.round(new Date().getTime() / 1000)}'
+        )
+        RETURNING id;
+        `
+    )
+    .then((res) =>
+    {
+        return res.id;
+    });
+}
+
 module.exports.get_home_page_list = get_home_page_list;
 module.exports.sign_up = sign_up;
 module.exports.login = login;
+module.exports.submit = submit;
