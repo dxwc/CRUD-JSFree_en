@@ -6,14 +6,37 @@ let uuid = require('uuid');
 
 function get_home_page_list()
 {
-    // TODO: Join to get user's name
-    return db.query(`SELECT * FROM submission ORDER BY published limit 20`)
+    return db.query
+    (
+        `
+        SELECT
+            s.id,
+            s.title,
+            s.content,
+            s.published,
+            s.marker,
+            people.u_name
+        FROM
+            (SELECT
+            id, posted_by, title, content, published, marker
+            FROM
+                submission
+            ORDER BY
+                published
+            LIMIT 20) AS s
+        INNER JOIN
+            people
+        ON
+            s.posted_by = people.id
+        `
+    )
     .then((res) =>
     {
         res.forEach((post) =>
         {
             post.title     = xss.inHTMLData(val.unescape(post.title));
             post.content   = xss.inHTMLData(val.unescape(post.content));
+            post.u_name    = xss.inHTMLData(val.unescape(post.u_name));
             post.published = mom.unix(post.published).fromNow();
         });
 

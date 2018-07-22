@@ -11,16 +11,22 @@
 <? } else if(locals.list.length === 0) { ?>
     <p>There seems to be no posts to show</p>
 <? } else { ?>
+    <ul>
     <? list.forEach((post) => { ?>
-        <a href='/post/<?= post.id ?>'><?= post.title ?></a>
+        <li>
+            <a href='/post/<?= post.id ?>'><?= post.title ?></a>
+            <i>posted by <a href='/user/<?=post.u_name?>'><?=post.u_name?></a></i>
+            <i><?= post.published ?></i>
+        </li>
     <? }); ?>
+    </ul>
 <? } ?>
 
 
 <? if(locals.is_logged_in === true) { ?>
-    Logged in
+    <p>Logged in<p>
 <? } else { ?>
-    Not Logged in
+    <p>Not Logged in</p>
 <? } ?>
 </body>
 </html>
