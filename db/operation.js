@@ -127,7 +127,39 @@ function submit(title, description, u_id)
     });
 }
 
+function get_post(id)
+{
+    return db.one
+    (
+        `
+        SELECT
+            u_name,
+            s.id,
+            s.title,
+            s.content,
+            s.published,
+            s.marker
+        FROM
+            (SELECT * FROM submission where id='${id}') AS s
+        INNER JOIN
+            people
+        ON
+            s.posted_by = people.id
+        `
+    )
+    .then((res) =>
+    {
+        res.u_name    = xss.inHTMLData(val.unescape(res.u_name));
+        res.title     = xss.inHTMLData(val.unescape(res.title));
+        res.content   = xss.inHTMLData(val.unescape(res.content));
+        res.published = mom.unix(res.published).fromNow();
+
+        return res;
+    });
+}
+
 module.exports.get_home_page_list = get_home_page_list;
 module.exports.sign_up = sign_up;
 module.exports.login = login;
 module.exports.submit = submit;
+module.exports.get_post = get_post;

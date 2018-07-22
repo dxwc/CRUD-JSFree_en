@@ -1,0 +1,26 @@
+<html>
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title><?= typeof(locals.title) === 'string' ? title : 'Post' ?></title>
+</head>
+<body>
+<? if(typeof(locals.error) === 'string') { ?>
+    <p style='font-style: italic; color: red;'><?= error ?></p>
+<? } ?>
+
+<article>
+    <h1><?= typeof(locals.title) === 'string' ? title : '' ?></h1>
+    <i>
+        <?= typeof(locals.by) === 'string' ? 'By' : '' ?>
+        <a href='/user/<?= typeof(locals.by) === 'string' ? by : '' ?>'>
+            <?= typeof(locals.by) === 'string' ? by : '' ?>
+        </a>
+    </i>
+    <i>
+        <?= typeof(locals.published) === 'string' ? published : '' ?>
+    </i>
+    <p><?= typeof(locals.description) === 'string' ? description : '' ?></p>
+</article>
+</body>
+</html>
