@@ -3,6 +3,7 @@ let val = require('validator');
 let xss = require('xss-filters');
 let mom = require('moment');
 let uuid = require('uuid');
+let bcrypt = require('bcrypt');
 
 function get_home_page_list()
 {
@@ -46,35 +47,41 @@ function get_home_page_list()
 
 function sign_up(username, password)
 {
-    return db.one
-    (
-        `
-        INSERT INTO people
-        (
-            id,
-            u_name,
-            u_pass,
-            joined
-        )
-        VALUES
-        (
-            '${uuid.v4()}',
-            '${val.escape(username)}',
-            '${val.escape(password)}',
-            ${Math.round(new Date().getTime() / 1000)}
-        )
-        RETURNING id
-        `
-    )
-    .then((res) =>
+    return bcrypt.hash(password, 12)
+    .then((hashed_password) =>
     {
-        return res.id;
-    })
-    .catch((err) =>
-    {
-        if(err.code == '23505') throw new Error('-1'); // username already exists
-        else throw err;
+        return db.one
+        (
+            `
+            INSERT INTO people
+            (
+                id,
+                u_name,
+                u_pass,
+                joined
+            )
+            VALUES
+            (
+                '${uuid.v4()}',
+                '${val.escape(username)}',
+                '${val.escape(hashed_password)}',
+                ${Math.round(new Date().getTime() / 1000)}
+            )
+            RETURNING id
+            `
+        )
+        .then((res) =>
+        {
+            return res.id;
+        })
+        .catch((err) =>
+        {
+            // username already exists:
+            if(err.code == '23505') throw new Error('-1');
+            else throw err;
+        });
     });
+
 }
 
 function login(username, password)
@@ -82,16 +89,29 @@ function login(username, password)
     return db.one
     (
         `
-        SELECT id
-        FROM people
-        WHERE
-            u_name='${val.escape(username)}' AND
-            u_pass='${val.escape(password)}'
+        SELECT id, u_pass
+        FROM   people
+        WHERE  u_name='${val.escape(username)}'
         `
     )
     .then((res) =>
     {
-        return res.id;
+        return Promise.all
+        ([
+            bcrypt.compare(password, val.unescape(res.u_pass)),
+            res.id
+        ]);
+    })
+    .then((arr) =>
+    {
+        if(arr[0] === true) return arr[1];
+        else
+        {
+
+            let err = new Error(); // password doesn't match
+            err.code = 0;
+            throw err;
+        }
     });
 }
 
