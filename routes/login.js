@@ -89,7 +89,7 @@ router.post('/login', (req, res) =>
 router.get('/logout', (req, res) =>
 {
     req.session.destroy();
-    res.send('You are now logged out');
+    res.render('logout');
 });
 
 module.exports = router;
