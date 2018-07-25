@@ -29,7 +29,10 @@ router.get('/post/:id', (req, res) =>
                     description : result.content,
                     published   : result.published,
                     by          : result.u_name,
-                    marker      : result.marker
+                    marker      : result.marker,
+                    post_id     : req.params.id,
+                    is_logged_in :
+                                typeof(req.session.u_id) === 'string' ? true : false
                 }
             );
         }

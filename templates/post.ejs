@@ -20,6 +20,17 @@
         <?= typeof(locals.published) === 'string' ? published : '' ?>
     </i>
     <p><?= typeof(locals.description) === 'string' ? description : '' ?></p>
+    <footer>
+        <? if(locals.is_logged_in === true) { ?>
+        <a href='/delete-post/<?=
+            typeof(locals.post_id) === 'string' ? post_id : '' ?>'>
+            delete</a>
+        <? } ?>
+        <a href='/report-post/<?=
+            typeof(locals.post_id) === 'string' ? post_id : '' ?>'>
+            report
+        </a>
+    </footer>
 </article>
 
 <?- include('./partials/nav.ejs') ?>
