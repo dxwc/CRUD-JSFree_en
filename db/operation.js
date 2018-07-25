@@ -178,8 +178,69 @@ function get_post(id)
     });
 }
 
+function get_user_info(username)
+{
+    return db.one
+    (
+        `
+        SELECT id, joined, marker
+        FROM people
+        WHERE u_name='${val.escape(username)}'
+        `
+    )
+    .then((res) =>
+    {
+        res.joined = mom.unix(res.joined).fromNow();
+        return Promise.all
+        ([
+            res,
+            db.any
+            (
+                `
+                SELECT title, content, published, marker
+                FROM submission
+                WHERE posted_by='${res.id}'
+                ORDER BY published
+                `
+            )
+            .then((submissions) =>
+            {
+                submissions.forEach((post) =>
+                {
+                    post.title     = xss.inHTMLData(val.unescape(post.title));
+                    post.content   = xss.inHTMLData(val.unescape(post.content));
+                    post.published = mom.unix(post.published).fromNow();
+                });
+
+                return submissions;
+            })
+            ,
+            db.any
+            (
+                `
+                SELECT id, content, published
+                FROM comment
+                WHERE posted_by='${res.id}'
+                ORDER BY published
+                `
+            )
+            .then((comments) =>
+            {
+                comments.forEach((com) =>
+                {
+                    com.content   = xss.inHTMLData(val.unescape(com.content));
+                    com.published = mom.unix(com.published).fromNow();
+                });
+
+                return comments;
+            })
+        ]);
+    });
+}
+
 module.exports.get_home_page_list = get_home_page_list;
 module.exports.sign_up = sign_up;
 module.exports.login = login;
 module.exports.submit = submit;
 module.exports.get_post = get_post;
+module.exports.get_user_info = get_user_info;
