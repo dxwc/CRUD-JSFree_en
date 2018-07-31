@@ -1,20 +1,6 @@
 # Dev Doc
 
-## Pages
-
-+ Sign Up page
-+ Login page
-+ Account info and delete page
-+ Content List page/s
-+ Content display page
-+ Content delete page
-+ Reply page
-+ Report content/reply page
-
-Low priority:
-
-+ User about submission page
-+ User saved marking page
+TODO
 
 ## Local dev
 
