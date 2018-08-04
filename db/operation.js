@@ -87,8 +87,7 @@ function sign_up(username, password)
         })
         .catch((err) =>
         {
-            // username already exists:
-            if(err.code == '23505') throw new Error('-1');
+            if(err.code == '23505') return -1; // username already exists:
             else throw err;
         });
     });

@@ -1,6 +1,14 @@
 let val = require('validator');
 let svg = require('svg-captcha');
 
+function log_user_in(id, req)
+{
+    if(typeof(id) === 'string' && val.isUUID(id))
+    {
+        req.session.u_id = id;
+    }
+}
+
 function is_logged_in(req)
 {
     return (
@@ -25,7 +33,7 @@ function set_captcha(req)
     return captcha.data;
 }
 
-function captcha_is_valid(solved_text)
+function captcha_is_valid(solved_text, req)
 {
     return typeof(req.session.captcha) === 'string' &&
            req.session.captcha === solved_text;
@@ -67,6 +75,36 @@ error =
     {
         status : 200,
         message : 'You are already logged in, no need to sign up'
+    },
+    '1401' :
+    {
+        status : 400,
+        message : 'Invalid request / data'
+    },
+    '1001' :
+    {
+        status : 400,
+        message : 'Username must be longer than 2 characters and smaller than 10'
+    },
+    '1002' :
+    {
+        status : 400,
+        message : 'Passwords must be longer than 4 characters'
+    },
+    '1003' :
+    {
+        status : 400,
+        message : 'Both passwords must be the same'
+    },
+    '1004' :
+    {
+        status : 400,
+        message : 'Security/Captcha text entered was invalid, retry'
+    },
+    '1010' :
+    {
+        status : 200,
+        message : 'Username is taken, change and retry'
     }
 };
 
@@ -124,6 +162,7 @@ function render_json(json, to_render, res, err)
     }
 }
 
+module.exports.log_user_in = log_user_in;
 module.exports.is_logged_in = is_logged_in;
 module.exports.get_self_id = get_self_id;
 module.exports.set_captcha = set_captcha;
