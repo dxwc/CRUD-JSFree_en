@@ -13,13 +13,19 @@ function get_home_page_list()
         SELECT
             s.id,
             s.title,
-            s.content,
+            -- s.content,
             s.published,
             s.marker,
-            people.u_name
+            people.u_name,
+            (SELECT COUNT(*) FROM comment WHERE comment.parent = s.id) as comments
         FROM
             (SELECT
-            id, posted_by, title, content, published, marker
+                id,
+                posted_by,
+                title,
+                -- content,
+                published,
+                marker
             FROM
                 submission
             ORDER BY
@@ -36,12 +42,17 @@ function get_home_page_list()
         res.forEach((post) =>
         {
             post.title     = xss.inHTMLData(val.unescape(post.title));
-            post.content   = xss.inHTMLData(val.unescape(post.content));
-            post.u_name    = xss.inHTMLData(val.unescape(post.u_name));
+            // post.content   = xss.inHTMLData(val.unescape(post.content));
+            post.posted_by = xss.inHTMLData(val.unescape(post.u_name));
             post.published = mom.unix(post.published).fromNow();
+            delete post.u_name;
         });
 
         return res;
+    })
+    .catch((err) =>
+    {
+        throw err;
     });
 }
 
