@@ -62,8 +62,67 @@ error =
     {
         status : 500,
         message: 'Unhandled error, retry or contact admin'
+    },
+    '-5000' :
+    {
+        status : 200,
+        message : 'You are already logged in, no need to sign up'
     }
 };
+
+function send_json(json, res, err)
+{
+    if(err)
+    {
+        print_error(err);
+        return res.status(500).send('Unexpected error, retry or contact admin');
+    }
+    else if
+    (
+        typeof(json) === 'object' &&
+        typeof(json.error) === 'object' &&
+        typeof(json.error.status) === 'string' &&
+        val.isNumeric(json.error.status)
+    )
+    {
+        return res.status(json.error.status).send(json);
+    }
+    else if(typeof(json) === 'object')
+    {
+        return res.status(200).send(json);
+    }
+    else
+    {
+        return res.status(500).send('Unexpected error, retry or contact admin');
+    }
+}
+
+function render_json(json, to_render, res, err)
+{
+    if(err)
+    {
+        print_error(err);
+        return res.status(500).send('Unexpected error, retry or contact admin');
+    }
+    else if
+    (
+        typeof(json) === 'object' &&
+        typeof(json.error) === 'object' &&
+        typeof(json.error.status) === 'string' &&
+        val.isNumeric(json.error.status)
+    )
+    {
+        return res.status(json.error.status).render(to_render, json);
+    }
+    else if(typeof(json) === 'object')
+    {
+        return res.status(200).render(to_render, json);
+    }
+    else
+    {
+        return res.status(500).send('Unexpected error, retry or contact admin');
+    }
+}
 
 module.exports.is_logged_in = is_logged_in;
 module.exports.get_self_id = get_self_id;
@@ -73,3 +132,5 @@ module.exports.set_and_render = set_and_render;
 module.exports.captcha_is_valid = captcha_is_valid;
 module.exports.print_error = print_error;
 module.exports.error = error;
+module.exports.send_json = send_json;
+module.exports.render_json = render_json;
