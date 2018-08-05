@@ -9,6 +9,14 @@ function log_user_in(id, req)
     }
 }
 
+function log_user_out(req)
+{
+    req.session.destroy((err) =>
+    {
+        print_error(err);
+    });
+}
+
 function is_logged_in(req)
 {
     return (
@@ -105,6 +113,11 @@ error =
     {
         status : 200,
         message : 'Username is taken, change and retry'
+    },
+    '9999' :
+    {
+        status : 500,
+        message : `Error logging out, retry or try deleting cache`
     }
 };
 
@@ -163,6 +176,7 @@ function render_json(json, to_render, res, err)
 }
 
 module.exports.log_user_in = log_user_in;
+module.exports.log_user_out = log_user_out;
 module.exports.is_logged_in = is_logged_in;
 module.exports.get_self_id = get_self_id;
 module.exports.set_captcha = set_captcha;
