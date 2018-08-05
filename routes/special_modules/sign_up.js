@@ -108,6 +108,7 @@ function post_sign_up(req)
                 reject(`Signed up but not logged in ???`, json.self_id);
 
             json.info = `Successfully signed up and logged in`;
+            c.remove_captcha(req);
 
             return resolve(json);
         })

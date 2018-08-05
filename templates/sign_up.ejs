@@ -1,1 +1,55 @@
-TODO
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Sign Up</title>
+    <style>
+        input, svg, button
+        {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <h1 class='error'>
+        <?= locals.error && error.message ? error.message : '' ?>
+        <?= locals.info ? info : '' ?>
+    </h1>
+
+    <? if(typeof(locals.captcha) === 'string') { ?>
+    <form method='post' action='/sign_up'>
+        <input
+            type='text'
+            name='username'
+            placeholder='Username'
+            min='3'
+            max='9'
+            <?= locals.recieved_username ? `value=${recieved_username}` : '' ?>
+            required>
+        <input
+            type='password'
+            name='password1'
+            placeholder='Password'
+            min='5'
+            required>
+        <input
+            type='password'
+            name='password2'
+            placeholder='Re-enter password'
+            min='5'
+            required>
+        <?- captcha ?>
+        <input
+            type='text'
+            name='captcha_solved'
+            placeholder='Captcha code'
+            min='2'
+            required>
+        <button
+            type='submit'>Enter</button>
+    </form>
+    <? } ?>
+    <?- include('partials/nav') ?>
+</body>
+</html>
