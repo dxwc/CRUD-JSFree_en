@@ -1,6 +1,20 @@
 let c      = require('../special_modules/commons.js');
 
-function logout(req)
+function get_logout(req)
+{
+    return Promise.resolve
+    ({
+        is_logged_in       : c.is_logged_in(req),
+        self_id            : c.get_self_id(req)
+    })
+    .catch((err) =>
+    {
+        c.print_error(err);
+        throw err;
+    });
+}
+
+function post_logout(req)
 {
     try
     {
@@ -13,4 +27,5 @@ function logout(req)
     }
 }
 
-module.exports = logout;
+module.exports.get_logout = get_logout;
+module.exports.post_logout = post_logout;

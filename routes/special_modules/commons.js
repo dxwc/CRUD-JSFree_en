@@ -11,10 +11,7 @@ function log_user_in(id, req)
 
 function log_user_out(req)
 {
-    req.session.destroy((err) =>
-    {
-        print_error(err);
-    });
+    req.session.destroy();
 }
 
 function is_logged_in(req)

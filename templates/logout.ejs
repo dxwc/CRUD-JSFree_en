@@ -1,1 +1,11 @@
-TODO
+<? if(locals.info) { ?>
+    <h1 class='info'><?= info ?></h1>
+<? } else if(locals.is_logged_in === true) { ?>
+    <form method='post'>
+        <button type='submit'>Confirm you want to log out</button>
+    </form>
+<? } else { ?>
+    You don't seem to be logged in right now.
+<? } ?>
+
+<?- include('partials/nav.ejs') ?>
