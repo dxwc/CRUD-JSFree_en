@@ -81,6 +81,11 @@ error =
         status : 200,
         message : 'You are already logged in, no need to sign up'
     },
+    '-5001' :
+    {
+        status : 200,
+        message : 'You are already logged in, no need to login again'
+    },
     '1401' :
     {
         status : 400,
@@ -115,6 +120,11 @@ error =
     {
         status : 500,
         message : `Error logging out, retry or try deleting cache`
+    },
+    '2020' :
+    {
+        status : 200,
+        message : `No such username and password combination found`
     }
 };
 

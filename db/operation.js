@@ -115,14 +115,13 @@ function login(username, password)
     .then((arr) =>
     {
         if(arr[0] === true) return arr[1];
-        else
-        {
-
-            let err = new Error(); // password doesn't match
-            err.code = 0;
-            throw err;
-        }
-    });
+        else                return -1;
+    })
+    .catch((err) =>
+    {
+        if(err.code === 0) return -1;
+        else               throw err;
+    })
 }
 
 function submit(title, description, u_id)
