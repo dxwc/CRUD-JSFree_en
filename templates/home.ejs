@@ -1,1 +1,28 @@
-<?- include('partials/nav') ?>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Home</title>
+    <style>
+        input, svg, button
+        {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <h1 class='error'>
+        <?= locals.error && error.message ? error.message : '' ?>
+        <?= locals.info ? info : '' ?>
+    </h1>
+
+    <? if(locals.posts && posts.length) {
+           posts.forEach((post) => { ?>
+        <li><a href='/post/<?= post.id ?>'><?= post.title ?></a></li>
+    <? }) } ?>
+
+    <?- include('partials/nav') ?>
+
+</body>
+</html>

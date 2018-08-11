@@ -153,6 +153,10 @@ function submit(title, description, u_id)
     .then((res) =>
     {
         return res.id;
+    })
+    .catch((err) =>
+    {
+        throw err;
     });
 }
 

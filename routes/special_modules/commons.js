@@ -125,6 +125,11 @@ error =
     {
         status : 200,
         message : `No such username and password combination found`
+    },
+    '-4000' :
+    {
+        status : 200,
+        message : 'You must login before you can post'
     }
 };
 
