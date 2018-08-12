@@ -130,6 +130,11 @@ error =
     {
         status : 200,
         message : 'You must login before you can post'
+    },
+    '-6000' :
+    {
+        status : 404,
+        message : `No user submission found in database with that id`
     }
 };
 

@@ -3,7 +3,7 @@
     <meta charset='UTF-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1.0'>
     <meta http-equiv='X-UA-Compatible' content='ie=edge'>
-    <title>Home</title>
+    <title><?= locals.title ? locals.title : 'Post Page' ?></title>
     <style>
         input, svg, button
         {
@@ -17,14 +17,15 @@
         <?= locals.info ? info : '' ?>
     </h1>
 
-    <? if(locals.posts && posts.length) {
-           posts.forEach((post) => { ?>
-        <li>
-            <a href='/post/<?= post.id ?>'><?= post.title ?></a>
-            By <i><?= post.posted_by ?></i>
+    <? if(locals.post) { ?>
+        <h1><?= post.title ?></h1>
+        <div>
+            Posted by
+            <i><a href='/user/<?= post.posted_by ?>'><?= post.posted_by ?></a></i>
             <?= post.published ?>
-        </li>
-    <? }) } ?>
+        </div>
+        <?- post.content ?>
+    <? } ?>
 
     <?- include('partials/nav') ?>
 

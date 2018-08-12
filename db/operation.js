@@ -182,10 +182,16 @@ function get_post(id)
     )
     .then((res) =>
     {
-        res.u_name    = xss.inHTMLData(val.unescape(res.u_name));
+        res.posted_by = xss.inHTMLData(val.unescape(res.u_name));
         res.title     = xss.inHTMLData(val.unescape(res.title));
         res.content   = xss.inHTMLData(val.unescape(res.content));
         res.published = mom.unix(res.published).fromNow();
+
+        delete res.u_name;
+
+        res.content = '<p>' + res.content;
+        res.content = res.content.replace('\r\n', '</p><p>');
+        res.content += '</p>';
 
         return res;
     });
