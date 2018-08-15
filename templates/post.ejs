@@ -1,3 +1,4 @@
+<!doctype html>
 <html lang='en'>
 <head>
     <meta charset='UTF-8'>
@@ -23,6 +24,9 @@
             Posted by
             <i><a href='/user/<?= post.posted_by ?>'><?= post.posted_by ?></a></i>
             <?= post.published ?>
+            <? if(locals.self_id === post.posted_by_id) { ?>
+                [ <a href='/post/edit/<?= post.id ?>'>EDIT</a> ]
+            <? } ?>
         </div>
         <?- post.content ?>
     <? } ?>

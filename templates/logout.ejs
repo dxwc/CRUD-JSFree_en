@@ -1,11 +1,28 @@
-<? if(locals.info) { ?>
-    <h1 class='info'><?= info ?></h1>
-<? } else if(locals.is_logged_in === true) { ?>
-    <form method='post'>
-        <button type='submit'>Confirm you want to log out</button>
-    </form>
-<? } else { ?>
-    <h1>You don't seem to be logged in right now ¯\_(ツ)_/¯</h1>
-<? } ?>
+<!doctype html>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title><?= locals.title ? locals.title : 'Logout' ?></title>
+    <style>
+        input, svg, button
+        {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <? if(locals.info) { ?>
+        <h1 class='info'><?= info ?></h1>
+    <? } else if(locals.is_logged_in === true) { ?>
+        <form method='post'>
+            <button type='submit'>Confirm you want to log out</button>
+        </form>
+    <? } else { ?>
+        <h1>You don't seem to be logged in right now ¯\_(ツ)_/¯</h1>
+    <? } ?>
 
-<?- include('partials/nav.ejs') ?>
+    <?- include('partials/nav.ejs') ?>
+</body>
+</html>

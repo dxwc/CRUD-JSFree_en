@@ -4,7 +4,7 @@
     <meta charset='UTF-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1.0'>
     <meta http-equiv='X-UA-Compatible' content='ie=edge'>
-    <title>Submit</title>
+    <title>Update Post</title>
     <style>
         input, texarea, svg, button
         {
@@ -22,18 +22,27 @@
     <h2><a href='/post/<?= post_id ?>'>Link to your post</a></h2>
     <? } ?>
 
-    <? if(typeof(locals.captcha) === 'string') { ?>
-    <form method='post' action='/submit'>
+    <? if
+    (
+        locals.self_id && locals.post && locals.post.posted_by_id &&
+        locals.self_id === locals.post.posted_by_id &&
+        typeof(locals.captcha) === 'string' &&
+        typeof(locals.post) === 'object' &&
+        typeof(locals.post.id) === 'string' &&
+        typeof(locals.post.title) === 'string' &&
+        typeof(locals.post.content) === 'string'
+    ) { ?>
+    <form method='post' action='/post/edit/<?= post.id ?>'>
         <input
             type='text'
             name='title'
             placeholder='Title'
-            value='<?= locals.recieved_title ? recieved_title : '' ?>'
+            value='<?= post.title ?>'
             required>
         <textarea
             name='body'
             placeholder='Body of the post'
-            required><?= locals.recieved_body ? recieved_body : '' ?></textarea>
+            required><?= post.content ?></textarea>
         <?- captcha ?>
         <input
             type='text'
@@ -44,6 +53,8 @@
         <button
             type='submit'>Enter</button>
     </form>
+    <? } else if(locals.post && locals.self_id !== locals.post.posted_by_id) { ?>
+        <h1>You can't edit other people's post 🤨</h1>
     <? } ?>
     <?- include('partials/nav') ?>
 </body>

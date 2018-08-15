@@ -35,6 +35,8 @@ function get_home_page_list()
             people
         ON
             s.posted_by = people.id
+        ORDER BY
+            s.published DESC
         `
     )
     .then((res) =>
@@ -126,7 +128,7 @@ function login(username, password)
 
 function submit(title, description, u_id)
 {
-    // TODO: detect if description is link, if so save as such with marker
+    // MAYBE: detect if description is link, if so save as such with marker
 
     return db.one
     (
@@ -160,12 +162,47 @@ function submit(title, description, u_id)
     });
 }
 
-function get_post(id)
+function update_post(title, description, post_id)
+{
+    return db.none
+    (
+        `
+        UPDATE
+            submission
+        SET
+            title='${val.escape(title)}',
+            content='${val.escape(description)}'
+        WHERE
+            id='${post_id}'
+        `
+    )
+    .catch((err) =>
+    {
+        throw err;
+    });
+}
+
+function get_posted_by_id(post_id)
+{
+    return db.one(`SELECT posted_by FROM submission where id='${post_id}'`)
+    .then((res) =>
+    {
+        return res.posted_by;
+    })
+    .catch((err) =>
+    {
+        throw err;
+    });
+}
+
+
+function get_post(id, is_for_update)
 {
     return db.one
     (
         `
         SELECT
+            people.id AS posted_by_id,
             u_name,
             s.id,
             s.title,
@@ -189,9 +226,15 @@ function get_post(id)
 
         delete res.u_name;
 
-        res.content = '<p>' + res.content;
-        res.content = res.content.replace('\r\n', '</p><p>');
-        res.content += '</p>';
+        if(!is_for_update)
+        {
+            res.content = '<p>' + res.content;
+            // res.content = res.content.replace('\r\n', '</p><p>');
+            /* https://stackoverflow.com/a/1144788 : */
+            res.content =
+                res.content.replace(new RegExp('\r\n\r\n', 'g'), '</p><p>');
+            res.content += '</p>';
+        }
 
         return res;
     });
@@ -261,5 +304,7 @@ module.exports.get_home_page_list = get_home_page_list;
 module.exports.sign_up = sign_up;
 module.exports.login = login;
 module.exports.submit = submit;
+module.exports.update_post = update_post;
+module.exports.get_posted_by_id = get_posted_by_id;
 module.exports.get_post = get_post;
 module.exports.get_user_info = get_user_info;

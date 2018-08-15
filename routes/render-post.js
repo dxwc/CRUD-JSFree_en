@@ -3,7 +3,8 @@ let c      = require('./special_modules/commons.js');
 
 router.get('/post/:id', (req, res) =>
 {
-    return require('./special_modules/post.js')(req)
+    return require('./special_modules/post.js')
+    .get_post(req)
     .then((json) => c.render_json(json, 'post', res))
     .catch((err) => c.render_json(null, 'post', res, err));
 });
