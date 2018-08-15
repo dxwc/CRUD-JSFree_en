@@ -135,6 +135,16 @@ error =
     {
         status : 404,
         message : `No user submission found in database with that id`
+    },
+    '7000' :
+    {
+        status: 200,
+        message : `You can't edit other people's post 🤨`
+    },
+    '7001' :
+    {
+        status: 200,
+        message : `If this is your post, you must first login to edit`
     }
 };
 

@@ -24,17 +24,30 @@ function get_post(req, is_for_update)
 
     return new Promise((resolve, reject) =>
     {
+        let json = {
+            is_logged_in : c.is_logged_in(req),
+            self_id      : c.get_self_id(req)
+        };
+
+        if(is_for_update && json.is_logged_in === false)
+        {
+            json.error = c.error['7001'];
+            return resolve(json);
+        }
+
         return require('../../db/operation.js')
         .get_post(req.params.id, is_for_update)
         .then((post) =>
         {
             if(typeof(post) !== 'object') return reject('type error');
 
-            let json = {
-                is_logged_in : c.is_logged_in(req),
-                self_id      : c.get_self_id(req),
-                post         : post
-            };
+            json.post = post;
+
+            if(is_for_update && json.self_id !== post.posted_by_id)
+            {
+                json.error = c.error['7000'];
+                return resolve(json);
+            }
 
             if(is_for_update) json.captcha = c.set_captcha(req);
 
@@ -56,7 +69,6 @@ function get_post(req, is_for_update)
     });
 }
 
-// for post:
 function update_post(req)
 {
     check_post_id(req);
@@ -67,13 +79,24 @@ function update_post(req)
         post         : { id : req.params.id }
     }
 
+    if(json.is_logged_in === false)
+    {
+        json.error = c.error['7001'];
+        return Promise.resolve(json);
+    }
+
     return require('../../db/operation.js')
     .get_posted_by_id(req.params.id)
     .then((id) =>
     {
         json.post.posted_by_id = id;
 
-        if(!c.captcha_is_valid(req.body.captcha_solved, req))
+        if(json.post.posted_by_id !== json.self_id)
+        {
+            json.error = c.error['7000'];
+            return json;
+        }
+        else if(!c.captcha_is_valid(req.body.captcha_solved, req))
         {
             json.error = c.error['1004'];
             json.captcha = c.set_captcha(req);
