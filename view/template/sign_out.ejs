@@ -1,0 +1,10 @@
+<?- include('./common/layout_pre.ejs', { title : 'Sign Out', name : locals.name }) ?>
+<? if(locals.name !== false) { ?>
+<form method='POST' action='/sign_out'>
+    <label>Click the button to confirm you want to sign out:</label>
+    <button type='submit'>Confirm and Sign Out</button>
+</form>
+<? } else { ?>
+    You are not signed in.
+<? } ?>
+<?- include('./common/layout_post.ejs') ?>
