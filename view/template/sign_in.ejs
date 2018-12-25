@@ -1,0 +1,56 @@
+<?- include('./common/layout_pre.ejs', { title : 'Sign In', name : locals.name }) ?>
+<? if(locals.name === false) { ?>
+<form method='POST' action='/sign_in'>
+    <div>
+        <label for='user_name'>Enter your user name:</label>
+        <input
+            name='user_name'
+            type='text'
+            placeholder='user name'
+            minlength='1'
+            maxlength='30'
+            autocomplete='off'
+            <? if(locals.user_name){ ?>
+            value='<?= user_name ?>'
+            <? } ?>
+            required>
+    </div>
+    <div>
+        <label for='password'>Enter your password:</label>
+        <input
+            name='password'
+            type='password'
+            placeholder='password'
+            minlength='1'
+            autocomplete='off'
+            <? if(locals.password) { ?>
+            value='<?= password ?>'
+            <? } ?>
+            required>
+    </div>
+    <div>
+        <label for='captcha'>Solve captcha</label>
+        <?- svg ?>
+        <input
+            name='captcha'
+            type='text'
+            placeholder='captcha'
+            minlength='4'
+            maxlength='4'
+            autocomplete='off'
+            required>
+    </div>
+    <? if(locals.info) { ?>
+    <div>
+        <?= info ?>
+    </div>
+    <? } ?>
+    <div>
+        <button
+            type='submit'>Submit</button>
+    </div>
+</form>
+<? } else { ?>
+    You are already signed in. No need to do it again.
+<? } ?>
+<?- include('./common/layout_post.ejs') ?>
