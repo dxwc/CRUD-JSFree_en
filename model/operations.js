@@ -44,7 +44,7 @@ function sign_up(user_name, password)
     });
 }
 
-function make_post(content, by)
+function create_post(content, by)
 {
     return model.post.findAll
     ({
@@ -86,7 +86,7 @@ function make_post(content, by)
     });
 }
 
-function get_post(id)
+function read_post(id)
 {
     return model.sequelize.query
     (
@@ -124,6 +124,29 @@ function get_post(id)
     });
 }
 
-module.exports.sign_up = sign_up;
-module.exports.make_post = make_post;
-module.exports.get_post = get_post;
+function update_post(id, content)
+{
+    return model.post.update
+    (
+        {
+            content : content
+        },
+        {
+            where : { id : id }
+        }
+    );
+}
+
+function delete_post(id)
+{
+    return model.post.destroy
+    ({
+        where : { id : id }
+    });
+}
+
+module.exports.sign_up     = sign_up;
+module.exports.create_post = create_post;
+module.exports.read_post   = read_post;
+module.exports.update_post = update_post;
+module.exports.delete_post = delete_post;
