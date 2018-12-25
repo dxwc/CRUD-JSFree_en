@@ -6,16 +6,16 @@ let val    = require('validator');
 router.get('/post/:id', async (req, res) =>
 {
     if(!req.params.id.constructor === String || !val.isUUID(req.params.id, 4))
-        return render(req, res, 'read_post', null, true);
+        return render(req, res, 'read_post');
 
     try
     {
         let post = await op.read_post(req.params.id)
-        return render(req, res, 'read_post', post, true);
+        return render(req, res, 'read_post', post);
     }
     catch(err)
     {
-        return render(req, res, 'read_post', null, true);
+        return render(req, res, 'read_post');
     }
 });
 
