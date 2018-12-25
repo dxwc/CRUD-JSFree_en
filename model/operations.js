@@ -3,6 +3,7 @@ const val    = require('validator');
 const bcrypt = require('bcrypt');
 let xss      = require('xss-filters');
 let querystr = require('querystring');
+let moment   = require('moment');
 
 function ready(input)
 {
@@ -45,19 +46,44 @@ function sign_up(user_name, password)
 
 function make_post(content, by)
 {
-    return model.post.create
-    (
+    return model.post.findAll
+    ({
+        where : { by : by },
+        order : [ [ 'createdAt', 'DESC' ] ],
+        attributes : ['createdAt'],
+        limit : 1,
+        raw : true
+    })
+    .then((res) =>
+    {
+        if(!res || !res.length || !res[0].createdAt) return;
+        else if(moment().unix() - moment(res[0].createdAt).unix() >= 180) return;
+        else
         {
-            content : val.escape(content),
-            by : by
-        },
-        {
-            attribute : ['id'],
-            raw : true
+            let err = new Error(moment().unix() - moment(res[0].createdAt).unix());
+            err.code = 'TIME_LIMIT'
+            throw err;
         }
-    )
+    })
+    .then(() =>
+    {
+        return model.post.create
+        (
+            {
+                content : val.escape(content),
+                by : by
+            },
+            {
+                attribute : ['id'],
+                raw : true
+            }
+        );
+    })
     .then((res) => res.id)
-    .catch((err) => { throw err; });
+    .catch((err) =>
+    {
+        throw err;
+    });
 }
 
 function get_post(id)
@@ -71,7 +97,7 @@ function get_post(id)
             posts."createdAt",
             posts."updatedAt"
         FROM
-            (SELECT * from posts where id='${id}') as posts
+            (SELECT * FROM posts WHERE id='${id}') AS posts
                 INNER JOIN
             users
         ON
