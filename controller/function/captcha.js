@@ -2,8 +2,9 @@ let svg_captcha = require('svg-captcha');
 
 function captcha_is_valid(req)
 {
-    return req.body.captcha_solution &&
-    req.body.captcha_solution.constructor === String;
+    return req.body.captcha&&
+        req.body.captcha.constructor === String &&
+        req.body.captcha === req.session.captcha_solution;
 }
 
 function set_captcha_get_svg(req)
