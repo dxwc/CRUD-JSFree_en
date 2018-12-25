@@ -1,0 +1,14 @@
+<?- include('./common/layout_pre.ejs', { title : 'Post', name : locals.name }) ?>
+
+<? if(locals.content && locals.by && locals.createdAt && locals.updatedAt) { ?>
+<p><?- content ?></p>
+<div>Posted by <?= by ?></div>
+<div>
+    <p>Posted at <?= createdAt ?></p>
+    <p>Updated at <?= updatedAt ?></p>
+</div>
+<? } else { ?>
+    Could not find any such post
+<? } ?>
+
+<?- include('./common/layout_post.ejs') ?>
