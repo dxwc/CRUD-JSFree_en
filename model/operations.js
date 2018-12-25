@@ -57,13 +57,14 @@ function create_post(content, by)
     .then((res) =>
     {
         if(!res || !res.length || !res[0].createdAt) return;
-        else if(moment().unix() - moment(res[0].createdAt).unix() >= 180) return;
-        else
-        {
-            let err = new Error(moment().unix() - moment(res[0].createdAt).unix());
-            err.code = 'TIME_LIMIT'
-            throw err;
-        }
+
+        let diff = moment().unix() - moment(res[0].createdAt).unix();
+
+        if(diff >= 180) return;
+
+        let err = new Error(180 - diff);
+        err.code = 'TIME_LIMIT'
+        throw err;
     })
     .then(() =>
     {

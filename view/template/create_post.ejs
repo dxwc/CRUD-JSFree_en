@@ -1,0 +1,30 @@
+<?- include('./common/layout_pre.ejs', { title : 'Post', name : locals.name }) ?>
+
+<? if(locals.name !== false) { ?>
+<form method='POST' action='/post/'>
+    <div>
+        <label for='content'>Write your content here:</label>
+    </div>
+    <div>
+        <textarea
+            name='content'
+            type='text'
+            placeholder='Enter your content here'
+            minlength='1'
+            autocomplete='off'
+            required><? if(locals.content){ ?><?= content ?><? } ?></textarea>
+    </div>
+    <? if(locals.info) { ?>
+    <div>
+        <?= info ?>
+    </div>
+    <? } ?>
+    <div>
+        <button type='submit'>Publish</button>
+    </div>
+</form>
+<? } else { ?>
+    You must be logged in to post
+<? } ?>
+
+<?- include('./common/layout_post.ejs') ?>
