@@ -159,8 +159,39 @@ function delete_post(id, by)
     });
 }
 
+function get_posts(user_name)
+{
+    return model.user.findOne
+    ({
+        where : { uname : val.escape(user_name) },
+        attributes : ['id']
+    })
+    .then((res) =>
+    {
+        if(!res || !res.id) throw new Error('No such user');
+        return model.post.findAll
+        ({
+            where : { by : res.id },
+            order : [ [ 'createdAt', 'DESC' ] ],
+            limit : 100,
+            raw   : true,
+            attributes : ['id', 'createdAt']
+        });
+    })
+    .then((arr) =>
+    {
+        arr.forEach((res) => res.createdAt = moment(res.createdAt).fromNow())
+        return arr;
+    })
+    .catch((err) =>
+    {
+        throw err;
+    });
+}
+
 module.exports.sign_up     = sign_up;
 module.exports.create_post = create_post;
 module.exports.read_post   = read_post;
 module.exports.update_post = update_post;
 module.exports.delete_post = delete_post;
+module.exports.get_posts   = get_posts;

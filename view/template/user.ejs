@@ -1,0 +1,10 @@
+<?- include('./common/layout_pre.ejs', { title : 'User', name : locals.name }) ?>
+<h2>User: <?= locals.user_name ?></h2>
+<? if(locals.posts) { ?>
+<ul>
+    <? posts.forEach((post) => { ?>
+        <li><a href='/post/<?= post.id ?>'><?= post.createdAt ?></a></li>
+    <? }); ?>
+</ul>
+<? } ?>
+<?- include('./common/layout_post.ejs') ?>
