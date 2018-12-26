@@ -1,12 +1,18 @@
 <?- include('./common/layout_pre.ejs', { title : 'Post', name : locals.name }) ?>
 
-<? if(locals.content && locals.by && locals.createdAt && locals.updatedAt) { ?>
+<? if
+(
+    locals.id &&
+    locals.content &&
+    locals.by &&
+    locals.createdAt &&
+    locals.updatedAt
+) { ?>
 <p><?- content ?></p>
 <? if
 (
     locals.name !== false &&
-    locals.by === locals.name &&
-    locals.id
+    locals.by === locals.name
 ) { ?>
 <form method='GET' action='/post/<?= id ?>/update'>
     <input type='hidden' name='username' value='<?= by ?>'>

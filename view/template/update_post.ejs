@@ -6,7 +6,8 @@
     locals.content &&
     locals.by &&
     locals.createdAt &&
-    locals.updatedAt
+    locals.updatedAt &&
+    locals.id
 ) { ?>
 <form method='POST' action='/post/<?= id ?>/update'>
     <div>
@@ -29,6 +30,10 @@
     <div>
         <button type='submit'>Publish change</button>
     </div>
+</form>
+<form method='GET' action='/post/<?= id ?>/delete'>
+    <input type='hidden' name='username' value='<?= by ?>'>
+    <button type='submit'>Delete</button>
 </form>
 <? } else { ?>
     You must be signed in and author of the post to edit it

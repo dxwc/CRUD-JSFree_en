@@ -3,6 +3,7 @@
 <? if
 (
     locals.name !== false &&
+    locals.id &&
     locals.content &&
     locals.by &&
     locals.createdAt &&
@@ -25,6 +26,10 @@
     <p>Posted at <?= createdAt ?></p>
     <p>Updated at <?= updatedAt ?></p>
 </div>
+<form method='GET' action='/post/<?= id ?>/update'>
+    <input type='hidden' name='username' value='<?= by ?>'>
+    <button type='submit'>Edit</button>
+</form>
 <? } else { ?>
     You must be signed in and author of the post to delete it
 <? } ?>
