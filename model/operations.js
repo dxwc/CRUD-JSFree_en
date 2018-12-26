@@ -189,9 +189,63 @@ function get_posts(user_name)
     });
 }
 
-module.exports.sign_up     = sign_up;
-module.exports.create_post = create_post;
-module.exports.read_post   = read_post;
-module.exports.update_post = update_post;
-module.exports.delete_post = delete_post;
-module.exports.get_posts   = get_posts;
+function create_report(user_name, content)
+{
+    return model.user.findOne
+    ({
+        where : { uname : val.escape(user_name) },
+        attributes : ['id']
+    })
+    .then((res) =>
+    {
+        if(!res || !res.id) throw new Error('No such user');
+        return model.report.create
+        (
+            {
+                by : res.id,
+                content : val.escape(content)
+            },
+            {
+                raw : true
+            }
+        );
+    })
+    .catch((err) =>
+    {
+        throw err;
+    });
+}
+
+function report_response(id, response)
+{
+    return model.report.update
+    (
+        {
+            response : response,
+        },
+        {
+            where : { id : id }
+        }
+    );
+}
+
+function delete_report(id)
+{
+    return model.report.destroy({ where : { id : id }});
+}
+
+function read_reports()
+{
+    return model.report.findAll();
+}
+
+module.exports.sign_up         = sign_up;
+module.exports.create_post     = create_post;
+module.exports.read_post       = read_post;
+module.exports.update_post     = update_post;
+module.exports.delete_post     = delete_post;
+module.exports.get_posts       = get_posts;
+module.exports.create_report   = create_report;
+module.exports.report_response = report_response;
+module.exports.delete_report   = delete_report;
+module.exports.read_reports    = read_reports;

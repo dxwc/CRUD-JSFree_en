@@ -146,6 +146,38 @@ const comment_comment = sequelize.define
     }
 );
 
+const report = sequelize.define
+(
+    'report',
+    {
+        id :
+        {
+            type : Sequelize.UUID,
+            defaultValue : Sequelize.UUIDV4,
+            primaryKey: true
+        },
+        by :
+        {
+            type : Sequelize.UUID,
+            references :
+            {
+                model : user,
+                key : 'id'
+            }
+        },
+        content :
+        {
+            type : Sequelize.TEXT,
+            allowNull : false
+        },
+        response :
+        {
+            type : Sequelize.TEXT,
+            allowNull : true
+        }
+    }
+)
+
 function connect()
 {
     return new Promise((resolve, reject) =>
@@ -176,3 +208,4 @@ module.exports.user = user;
 module.exports.post = post;
 module.exports.post_comment = post_comment;
 module.exports.comment_comment = comment_comment;
+module.exports.report = report;
