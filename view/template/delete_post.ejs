@@ -1,0 +1,32 @@
+<?- include('./common/layout_pre.ejs', { title : 'Delete', name : locals.name }) ?>
+
+<? if
+(
+    locals.name !== false &&
+    locals.content &&
+    locals.by &&
+    locals.createdAt &&
+    locals.updatedAt
+) { ?>
+<h3>Are you sure you want to permanently delete your post ?</h3>
+<form method='POST' action='/post/<?= id ?>/delete'>
+    <? if(locals.info) { ?>
+    <div><?= info ?></div>
+    <? } ?>
+    <div>
+        <button type='submit'>Confirm you want to delete below post</button>
+    </div>
+</form>
+<p><?- content ?></p>
+<div>
+    Posted by <?= by ?>
+</div>
+<div>
+    <p>Posted at <?= createdAt ?></p>
+    <p>Updated at <?= updatedAt ?></p>
+</div>
+<? } else { ?>
+    You must be signed in and author of the post to delete it
+<? } ?>
+
+<?- include('./common/layout_post.ejs') ?>

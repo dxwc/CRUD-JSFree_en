@@ -147,11 +147,15 @@ function update_post(id, content, by)
     });
 }
 
-function delete_post(id)
+function delete_post(id, by)
 {
     return model.post.destroy
     ({
-        where : { id : id }
+        where : { id : id, by : by }
+    })
+    .catch((err) =>
+    {
+        throw err;
     });
 }
 

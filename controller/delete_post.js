@@ -3,7 +3,7 @@ let render = require('./function/render.js');
 let op     = require('../model/operations.js');
 let val    = require('validator');
 
-router.get('/post/:id/update', async (req, res) =>
+router.get('/post/:id/delete', async (req, res) =>
 {
     function invalid(status)
     {
@@ -11,7 +11,7 @@ router.get('/post/:id/update', async (req, res) =>
         (
             req,
             res,
-            'update_post',
+            'delete_post',
             { info : `You must be signed in and author of the post to edit it`},
             status ? status : 400
         );
@@ -33,7 +33,7 @@ router.get('/post/:id/update', async (req, res) =>
     try
     {
         let post = await op.read_post(req.params.id, true)
-        return render(req, res, 'update_post', post);
+        return render(req, res, 'delete_post', post);
     }
     catch(err)
     {
@@ -41,12 +41,12 @@ router.get('/post/:id/update', async (req, res) =>
     }
 });
 
-router.post('/post/:id/update', async (req, res) =>
+router.post('/post/:id/delete', async (req, res) =>
 {
     function invalid(status)
     {
-        req.body.info = `You must be signed in and author of the post to edit it`;
-        return render(req, res, 'update_post', req.body, status ? status : 400);
+        req.body.info = `You must be signed in and author of the post to delete it`;
+        return render(req, res, 'delete_post', req.body, status ? status : 400);
     }
 
     if(!req.isAuthenticated()) return invalid();
@@ -54,24 +54,15 @@ router.post('/post/:id/update', async (req, res) =>
     if(req.params.id.constructor !== String || !val.isUUID(req.params.id, 4))
         return invalid();
 
-    if(!req.body.hasOwnProperty('content'))
-        return render(req, res, 'update_post', null, false, 401);
-
-    req.body.content = req.body.content.trim();
-
-    if(!req.body.content.length)
-        return render(req, res, 'update_post', null, false, 401);
-
     try
     {
-        await op.update_post
-              (req.params.id, req.body.content, req.session.passport.user.id);
-        return res.status(200).redirect(`/post/` + req.params.id);
+        await op.delete_post(req.params.id, req.session.passport.user.id)
+        return render(req, res, 'deleted', { id : req.params.id });
     }
     catch(err)
     {
-        req.body.info = `Unexpected error, retry or contact admin`;
-        return render(req, res, 'update_post', req.body, false, 500);
+        req.body.info = `Unexpected error, relod and retry or contact admin`;
+        return render(req, res, 'delete_post', req.body, false, 500);
     }
 });
 

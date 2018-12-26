@@ -12,6 +12,10 @@
     <input type='hidden' name='username' value='<?= by ?>'>
     <button type='submit'>Edit</button>
 </form>
+<form method='GET' action='/post/<?= id ?>/delete'>
+    <input type='hidden' name='username' value='<?= by ?>'>
+    <button type='submit'>Delete</button>
+</form>
 <? } ?>
 <div>
     Posted by <?= by ?>
