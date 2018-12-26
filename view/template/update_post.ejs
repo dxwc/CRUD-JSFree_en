@@ -1,0 +1,37 @@
+<?- include('./common/layout_pre.ejs', { title : 'Update', name : locals.name }) ?>
+
+<? if
+(
+    locals.name &&
+    locals.content &&
+    locals.by &&
+    locals.createdAt &&
+    locals.updatedAt
+) { ?>
+<form method='POST' action='/post/<?= id ?>/update'>
+    <div>
+        <label for='content'>Edit your content here:</label>
+    </div>
+    <div>
+        <textarea
+            name='content'
+            type='text'
+            placeholder='Enter your content here'
+            minlength='1'
+            autocomplete='off'
+            required><?= content ?></textarea>
+    </div>
+    <? if(locals.info) { ?>
+    <div>
+        <?= info ?>
+    </div>
+    <? } ?>
+    <div>
+        <button type='submit'>Publish change</button>
+    </div>
+</form>
+<? } else { ?>
+    You must be signed in and author of the post to edit it
+<? } ?>
+
+<?- include('./common/layout_post.ejs') ?>

@@ -2,7 +2,20 @@
 
 <? if(locals.content && locals.by && locals.createdAt && locals.updatedAt) { ?>
 <p><?- content ?></p>
-<div>Posted by <?= by ?></div>
+<? if
+(
+    locals.name !== false &&
+    locals.by === locals.name &&
+    locals.id
+) { ?>
+<form method='GET' action='/post/<?= id ?>/update'>
+    <input type='hidden' name='username' value='<?= by ?>'>
+    <button type='submit'>Edit</button>
+</form>
+<? } ?>
+<div>
+    Posted by <?= by ?>
+</div>
 <div>
     <p>Posted at <?= createdAt ?></p>
     <p>Updated at <?= updatedAt ?></p>

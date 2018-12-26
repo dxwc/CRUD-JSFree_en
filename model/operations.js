@@ -87,7 +87,7 @@ function create_post(content, by)
     });
 }
 
-function read_post(id)
+function read_post(id, for_update)
 {
     return model.sequelize.query
     (
@@ -113,9 +113,14 @@ function read_post(id)
         if(!res || !res[0]) throw res;
 
         res = res[0];
-        Reflect.ownKeys(res).forEach((key) => res[key] = ready(res[key]));
+        if(!for_update)
+        {
+            Reflect.ownKeys(res).forEach((key) => res[key] = ready(res[key]));
+        }
+        if(for_update) res.by = ready(res.by);
         res.by = querystr.escape(res.by);
-        res.content = res.content.replace(/\n/g, '<br>');
+        if(!for_update) res.content = res.content.replace(/\n/g, '<br>');
+        res.id = id;
 
         return res;
     })
@@ -125,7 +130,7 @@ function read_post(id)
     });
 }
 
-function update_post(id, content)
+function update_post(id, content, by)
 {
     return model.post.update
     (
@@ -133,9 +138,13 @@ function update_post(id, content)
             content : content
         },
         {
-            where : { id : id }
+            where : { id : id, by : by }
         }
-    );
+    )
+    .catch((err) =>
+    {
+        throw err;
+    });
 }
 
 function delete_post(id)
