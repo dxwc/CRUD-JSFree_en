@@ -22,6 +22,9 @@
     <input type='hidden' name='username' value='<?= by ?>'>
     <button type='submit'>Delete</button>
 </form>
+<form method='GET' action='/contact/<?= locals.self_link ? self_link : "" ?>'>
+    <button type='submit'>Report</button>
+</form>
 <? } ?>
 <div>
     Posted by <?= by ?>

@@ -1,0 +1,29 @@
+<?- include('./common/layout_pre.ejs', { title : 'Contact', name : locals.name }) ?>
+<? if(locals.name === false) { ?>
+    You must be signed in to contact or make a report here.
+    Alternatively you can email administrator at todo@example.com
+<? } else { ?>
+<form method='POST' action='/contact'>
+    <div>
+        <label for='content'>Write your concern here:</label>
+    </div>
+    <div>
+        <textarea
+            name='content'
+            type='text'
+            placeholder='Enter your content here'
+            minlength='1'
+            autocomplete='off'
+            required><?= locals.content ? content : '' ?></textarea>
+    </div>
+    <? if(locals.info) { ?>
+    <div>
+        <?= info ?>
+    </div>
+    <? } ?>
+    <div>
+        <button type='submit'>Send</button>
+    </div>
+</form>
+<? } ?>
+<?- include('./common/layout_post.ejs') ?>

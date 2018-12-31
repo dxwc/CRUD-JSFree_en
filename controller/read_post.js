@@ -2,6 +2,7 @@ let router = require('express').Router();
 let render = require('./function/render.js');
 let op     = require('../model/operations.js');
 let val    = require('validator');
+let qr     = require('querystring');
 
 router.get('/post/:id', async (req, res) =>
 {
@@ -10,7 +11,8 @@ router.get('/post/:id', async (req, res) =>
 
     try
     {
-        let post = await op.read_post(req.params.id)
+        let post = await op.read_post(req.params.id);
+        post.self_link = qr.escape(`/post/${req.params.id}`);
         return render(req, res, 'read_post', post);
     }
     catch(err)
