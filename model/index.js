@@ -176,7 +176,34 @@ const report = sequelize.define
             allowNull : true
         }
     }
-)
+);
+
+const follow = sequelize.define
+(
+    'follow',
+    {
+        user :
+        {
+            type : Sequelize.UUID,
+            primaryKey: true,
+            references :
+            {
+                model : user,
+                key : 'id'
+            }
+        },
+        following :
+        {
+            type : Sequelize.UUID,
+            primaryKey: true,
+            references :
+            {
+                model : user,
+                key : 'id'
+            }
+        },
+    }
+);
 
 function connect()
 {
@@ -209,3 +236,4 @@ module.exports.post = post;
 module.exports.post_comment = post_comment;
 module.exports.comment_comment = comment_comment;
 module.exports.report = report;
+module.exports.follow = follow;

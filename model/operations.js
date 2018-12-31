@@ -239,6 +239,95 @@ function read_reports()
     return model.report.findAll();
 }
 
+function create_follow(user_id, following_name)
+{
+    return model.user.findOne
+    ({
+        where : { uname : val.escape(following_name) },
+        attributes : ['id'],
+        raw : true
+    })
+    .then((res) =>
+    {
+        if(!res || !res.id) throw new Error('not found');
+        return res.id;
+    })
+    .then((id) =>
+    {
+        return model.follow.create
+        ({
+            user : user_id,
+            following : id
+        },
+        {
+            raw : true,
+            attributes : []
+        });
+    })
+    .catch((err) =>
+    {
+        if(err.parent && err.parent.code === '23505') return;
+        else throw err;
+    });
+}
+
+function read_follows(user_id)
+{
+    return model.sequelize.query
+    (
+        `
+        SELECT
+            users.uname as following
+            follows."createdAt",
+        FROM
+            (SELECT * FROM follows WHERE user='${user_id}') AS follows
+                INNER JOIN
+            users
+        ON
+            users.id = follows.following;
+        `,
+        {
+            type: model.sequelize.QueryTypes.SELECT,
+        }
+    )
+    .then((res) =>
+    {
+        if(!res || res.constructor !== Array) throw res;
+        res.forEach((val) => val.following = xss.inHTMLData(val.unescape(following)));
+        return res;
+    })
+    .catch((err) =>
+    {
+        throw err;
+    });
+}
+
+function delete_follow(user_id, following_name)
+{
+    return model.user.findOne
+    ({
+        where : { uname : val.escape(following_name) },
+        attributes : ['id'],
+        raw : true
+    })
+    .then((res) =>
+    {
+        if(!res || !res.id) throw new Error('not found');
+        return res.id;
+    })
+    .then((id) =>
+    {
+        return model.follow.destroy
+        ({
+            where : { user: user_id, following : id }
+        });
+    })
+    .catch((err) =>
+    {
+        throw err;
+    });
+}
+
 module.exports.sign_up         = sign_up;
 module.exports.create_post     = create_post;
 module.exports.read_post       = read_post;
@@ -249,3 +338,6 @@ module.exports.create_report   = create_report;
 module.exports.report_response = report_response;
 module.exports.delete_report   = delete_report;
 module.exports.read_reports    = read_reports;
+module.exports.create_follow   = create_follow;
+module.exports.read_follows    = read_follows;
+module.exports.delete_follow    = delete_follow;
