@@ -36,11 +36,18 @@ router.post('/sign_in', (req, res) =>
         'local',
         (err, user, info) =>
         {
-            if(err || !user)
+            if(err)
             {
-                if(err) console.error(err);
+                console.log(err);
+                req.body.info = `Unexpected error, you may retry or contact admin`;
+                return render(req, res, 'sign_in', req.body, true, 500);
 
-                req.body.info = `Captcha invalid, retry`;
+            }
+            if(!user) /* User not found */
+            {
+                req.body.info =
+                `No such user and password combination found. ` +
+                `Double check or re-enter your inputs and then retry`;
                 return render(req, res, 'sign_in', req.body, true, 409);
             }
             else
@@ -51,8 +58,9 @@ router.post('/sign_in', (req, res) =>
                     {
                         console.error(err);
 
-                        req.body.info = `Captcha invalid, retry`;
-                        return render(req, res, 'sign_in', req.body, true, 409);
+                        req.body.info =
+                            `Unexpected error, you may retry or contact admin`;
+                        return render(req, res, 'sign_in', req.body, true, 500);
                     }
                     else
                     {
