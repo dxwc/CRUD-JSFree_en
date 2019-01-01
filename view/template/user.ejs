@@ -1,5 +1,11 @@
 <?- include('./common/layout_pre.ejs', { title : 'User', name : locals.name }) ?>
+<? if(locals.user_name) { ?>
 <h2>User: <?= locals.user_name ?></h2>
+<? if(locals.name && locals.user_name && locals.name !== locals.user_name) { ?>
+<form method='POST' action='/follow/<?= user_name ?>'>
+    <button type='submit'>Follow</button>
+</form>
+<? } ?>
 <? if(locals.posts) { ?>
 <ul>
     <? posts.forEach((post) => { ?>
@@ -7,4 +13,8 @@
     <? }); ?>
 </ul>
 <? } ?>
+<? } else { ?>
+    No such user found. If you think this is an error, please retry or contact admin.
+<? } ?>
+
 <?- include('./common/layout_post.ejs') ?>

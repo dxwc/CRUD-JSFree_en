@@ -17,7 +17,7 @@ router.get('/user/:user_name', async (req, res) =>
     }
     catch(err)
     {
-        return render(req, res, 'user',  { user_name : req.params.user_name });
+        return render(req, res, 'user', null, false, 404);
     }
 });
 
