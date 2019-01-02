@@ -239,7 +239,18 @@ function delete_report(id)
 
 function read_reports()
 {
-    return model.report.findAll();
+    return model.report.findAll()
+    .then((res) =>
+    {
+        if(!res || res.constructor !== Array) return;
+        else res.forEach((r) => r.content = md.render(ready(r.content)));
+
+        return res;
+    })
+    .catch((err) =>
+    {
+        throw err;
+    });
 }
 
 function create_follow(user_id, following_name)

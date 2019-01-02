@@ -1,0 +1,28 @@
+<?- include('./common/layout_pre.ejs', { title : 'Admin', name : locals.name }) ?>
+
+<? if(locals.admin !== true) { ?>
+<h1>For use by authorized personnel only</h1>
+<form method='post' action='/check'>
+    <input name='user_name' type='text'><br>
+    <input name='password' type='password'><br>
+    <?- svg ?><br>
+    <input name='captcha' type='text'><br>
+    <button type='submit'>Enter</button>
+</form>
+<br>
+DO NOT ATTEMPT TO SIGN IN IF YOU ARE NOT AUTHORIZED. ANY ATTEMPT MAY BE LOGGED
+OR REPORTED WITH ASSUMTION OF CRIMINAL INTENT.
+<? } else { ?>
+<? if(locals.reports) { ?>
+<? reports.forEach((r) => { ?>
+<div class='report' style='border: 1px solid #000; padding : 1%; margin: 1%;'>
+    <?- r.content ?><br>
+    By: <?= r.by ?>
+</div>
+<? }) ?>
+<? } ?>
+<form method='POST' action='/check_out'>
+    <button type='submit'>Admin Sign Out</button>
+</form>
+<? } ?>
+<?- include('./common/layout_post.ejs') ?>
