@@ -7,6 +7,7 @@ let moment   = require('moment');
 let md       = require('markdown-it')({ breaks: true, linkify : true });
 
 md.disable('link');
+md.disable('image');
 
 function ready(input)
 {
@@ -342,6 +343,51 @@ function delete_follow(user_id, following_name)
     });
 }
 
+function front_page()
+{
+    return model.sequelize.query
+    (
+        `
+        SELECT
+            a.id,
+            a.content,
+            a."createdAt",
+            users.uname AS by
+        FROM
+            (
+                SELECT id, content, by,"createdAt"
+                FROM posts
+                ORDER BY "createdAt" ASC
+                LIMIT 100
+            ) AS a
+                INNER JOIN
+            users
+        ON
+            users.id = a.by;
+        `,
+        {
+            type: model.sequelize.QueryTypes.SELECT,
+        }
+    )
+    .then((arr) =>
+    {
+        arr.forEach((res) =>
+        {
+            res.createdAt = moment(res.createdAt).fromNow();
+                res.content = res.content.length > 100 ?
+                                ready(res.content.substr(0, 100) + ' ...') :
+                                ready(res.content);
+            res.by = ready(res.by);
+        });
+
+        return arr;
+    })
+    .catch((err) =>
+    {
+        throw err;
+    });
+}
+
 module.exports.sign_up         = sign_up;
 module.exports.create_post     = create_post;
 module.exports.read_post       = read_post;
@@ -354,4 +400,5 @@ module.exports.delete_report   = delete_report;
 module.exports.read_reports    = read_reports;
 module.exports.create_follow   = create_follow;
 module.exports.read_follows    = read_follows;
-module.exports.delete_follow    = delete_follow;
+module.exports.delete_follow   = delete_follow;
+module.exports.front_page      = front_page;
