@@ -1,2 +1,15 @@
 <?- include('./common/layout_pre.ejs', { title : 'Home', name : locals.name }) ?>
+<? if(locals.posts && posts.constructor === Array && posts.length) { ?>
+<? posts.forEach((p) => { ?>
+<div class='post' style='border: 1px solid black; padding: 1%; margin: 1%;'>
+    <?- p.content ?>
+    <div>
+        Posted by <a href='/user/<?= p.by ?>'><?= p.by ?></a>
+        <?= p.createdAt ?>
+    </div>
+    <a style='display: block' href='/post/<?= p.id ?>'>Read this post ==></a>
+</div>
+
+<? }); ?>
+<? } ?>
 <?- include('./common/layout_post.ejs') ?>
