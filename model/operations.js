@@ -4,6 +4,9 @@ const bcrypt = require('bcrypt');
 let xss      = require('xss-filters');
 let querystr = require('querystring');
 let moment   = require('moment');
+let md       = require('markdown-it')({ breaks: true, linkify : true });
+
+md.disable('link');
 
 function ready(input)
 {
@@ -119,7 +122,7 @@ function read_post(id, for_update)
         }
         if(for_update) res.by = ready(res.by);
         res.by = querystr.escape(res.by);
-        if(!for_update) res.content = res.content.replace(/\n/g, '<br>');
+        if(!for_update) res.content = md.render(res.content);
         res.id = id;
 
         return res;
