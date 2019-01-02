@@ -182,7 +182,7 @@ const follow = sequelize.define
 (
     'follow',
     {
-        user :
+        user_id :
         {
             type : Sequelize.UUID,
             primaryKey: true,

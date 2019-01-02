@@ -256,7 +256,7 @@ function create_follow(user_id, following_name)
     {
         return model.follow.create
         ({
-            user : user_id,
+            user_id : user_id,
             following : id
         },
         {
@@ -277,14 +277,14 @@ function read_follows(user_id)
     (
         `
         SELECT
-            users.uname as following
-            follows."createdAt",
+            users.uname AS name,
+            f."createdAt"
         FROM
-            (SELECT * FROM follows WHERE user='${user_id}') AS follows
+            (SELECT * FROM follows WHERE user_id='${user_id}') AS f
                 INNER JOIN
             users
         ON
-            users.id = follows.following;
+            users.id = f.following;
         `,
         {
             type: model.sequelize.QueryTypes.SELECT,
@@ -293,7 +293,7 @@ function read_follows(user_id)
     .then((res) =>
     {
         if(!res || res.constructor !== Array) throw res;
-        res.forEach((val) => val.following = xss.inHTMLData(val.unescape(following)));
+        res.forEach((u) => u.name = xss.inHTMLData(val.unescape(u.name)));
         return res;
     })
     .catch((err) =>
@@ -319,7 +319,7 @@ function delete_follow(user_id, following_name)
     {
         return model.follow.destroy
         ({
-            where : { user: user_id, following : id }
+            where : { user_id: user_id, following : id }
         });
     })
     .catch((err) =>
