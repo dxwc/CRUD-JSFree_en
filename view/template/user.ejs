@@ -6,7 +6,18 @@
     <button type='submit'>Follow</button>
 </form>
 <? } ?>
-<? if(locals.posts) { ?>
+<? if(locals.following && following.constructor === Array && following.length) { ?>
+<h3>You are following:</h3>
+<i>Only visible to you</i>
+<ul>
+
+    <? following.forEach((user) => { ?>
+    <li><a href='/user/<?= user.name ?>'><?= user.name ?></a></li>
+    <? }) ?>
+</ul>
+<? } ?>
+<? if(locals.posts && posts.constructor === Array && posts.length) { ?>
+<h3>Your posts: </h3>
 <ul>
     <? posts.forEach((post) => { ?>
         <li><a href='/post/<?= post.id ?>'><?= post.createdAt ?></a></li>
