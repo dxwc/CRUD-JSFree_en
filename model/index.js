@@ -74,9 +74,9 @@ const post = sequelize.define
     }
 );
 
-const post_comment = sequelize.define
+const comment = sequelize.define
 (
-    'post_comment',
+    'comment',
     {
         id :
         {
@@ -102,41 +102,10 @@ const post_comment = sequelize.define
                 key : 'id'
             }
         },
-        content :
-        {
-            type : Sequelize.TEXT,
-            allowNull : false
-        }
-    }
-);
-
-const comment_comment = sequelize.define
-(
-    'comment_comment',
-    {
-        id :
+        replying_to :
         {
             type : Sequelize.UUID,
-            defaultValue : Sequelize.UUIDV4,
-            primaryKey: true
-        },
-        by :
-        {
-            type : Sequelize.UUID,
-            references :
-            {
-                model : user,
-                key : 'id'
-            }
-        },
-        on :
-        {
-            type : Sequelize.UUID,
-            references :
-            {
-                model : post_comment,
-                key : 'id'
-            }
+            allowNull : true
         },
         content :
         {
@@ -233,7 +202,6 @@ module.exports.sequelize = sequelize;
 module.exports.connect = connect;
 module.exports.user = user;
 module.exports.post = post;
-module.exports.post_comment = post_comment;
-module.exports.comment_comment = comment_comment;
+module.exports.comment = comment;
 module.exports.report = report;
 module.exports.follow = follow;
