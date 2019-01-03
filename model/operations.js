@@ -388,17 +388,112 @@ function front_page()
     });
 }
 
-module.exports.sign_up         = sign_up;
-module.exports.create_post     = create_post;
-module.exports.read_post       = read_post;
-module.exports.update_post     = update_post;
-module.exports.delete_post     = delete_post;
-module.exports.get_posts       = get_posts;
-module.exports.create_report   = create_report;
-module.exports.report_response = report_response;
-module.exports.delete_report   = delete_report;
-module.exports.read_reports    = read_reports;
-module.exports.create_follow   = create_follow;
-module.exports.read_follows    = read_follows;
-module.exports.delete_follow   = delete_follow;
-module.exports.front_page      = front_page;
+function create_comment(post_id, commenter, content, replying_to)
+{
+    return model.comment.create
+    ({
+        post_id : post_id,
+        commenter : commenter,
+        content : val.escape(content),
+        replying_to : replying_to ? replying_to : null
+    });
+}
+
+function read_comment(comment_id)
+{
+    return model.comment.findOne
+    (
+        {
+            where : { id : comment_id }
+        },
+        {
+            raw : true
+        }
+    );
+}
+
+function update_comment(comment_id, content)
+{
+    return model.comment.update
+    (
+        {
+            content : val.escape(content)
+        },
+        {
+            where : { id : comment_id }
+        }
+    );
+}
+
+function delete_comment(comment_id)
+{
+    return model.comment.destroy
+    ({
+        where : { id : comment_id }
+    });
+}
+
+function get_post_comments(post_id)
+{
+    return model.sequelize.query
+    (
+        `
+        SELECT
+            a.id,
+            a.content,
+            a."createdAt",
+            users.uname AS commenter,
+            a.replying_to
+        FROM
+            (
+                SELECT id, content, commenter, "createdAt", replying_to
+                FROM comment
+                WHERE post_id='${post_id}'
+                ORDER BY "createdAt" ASC
+                LIMIT 100
+            ) AS a
+                INNER JOIN
+            users
+        ON
+            users.id = a.commenter;
+        `,
+        {
+            type: model.sequelize.QueryTypes.SELECT,
+        }
+    )
+    .then((arr) =>
+    {
+        arr.forEach((res) =>
+        {
+            res.createdAt = moment(res.createdAt).fromNow();
+            res.content = md.render(ready(res.content));
+            res.by = ready(res.by);
+        });
+
+        return arr;
+    })
+    .catch((err) =>
+    {
+        throw err;
+    });
+}
+
+module.exports.sign_up           = sign_up;
+module.exports.create_post       = create_post;
+module.exports.read_post         = read_post;
+module.exports.update_post       = update_post;
+module.exports.delete_post       = delete_post;
+module.exports.get_posts         = get_posts;
+module.exports.create_report     = create_report;
+module.exports.report_response   = report_response;
+module.exports.delete_report     = delete_report;
+module.exports.read_reports      = read_reports;
+module.exports.create_follow     = create_follow;
+module.exports.read_follows      = read_follows;
+module.exports.delete_follow     = delete_follow;
+module.exports.front_page        = front_page;
+module.exports.create_comment    = create_comment;
+module.exports.read_comment      = read_comment;
+module.exports.update_comment    = update_comment;
+module.exports.delete_comment    = delete_comment;
+module.exports.get_post_comments = get_post_comments;

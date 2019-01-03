@@ -84,7 +84,7 @@ const comment = sequelize.define
             defaultValue : Sequelize.UUIDV4,
             primaryKey: true
         },
-        by :
+        commenter :
         {
             type : Sequelize.UUID,
             references :
@@ -93,7 +93,7 @@ const comment = sequelize.define
                 key : 'id'
             }
         },
-        on :
+        post_id :
         {
             type : Sequelize.UUID,
             references :
