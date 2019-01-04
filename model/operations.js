@@ -453,7 +453,7 @@ function get_post_comments(post_id)
         FROM
             (
                 SELECT id, content, commenter, "createdAt", replying_to
-                FROM comment
+                FROM comments
                 WHERE post_id='${post_id}'
                 ORDER BY "createdAt" ASC
                 LIMIT 100
@@ -473,7 +473,7 @@ function get_post_comments(post_id)
         {
             res.createdAt = moment(res.createdAt).fromNow();
             res.content = md.render(ready(res.content));
-            res.by = ready(res.by);
+            res.commenter = ready(res.commenter);
         });
 
         return arr;

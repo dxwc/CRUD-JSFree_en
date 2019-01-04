@@ -9,17 +9,18 @@ router.get('/post/:id', async (req, res) =>
     if(!req.params.id.constructor === String || !val.isUUID(req.params.id, 4))
         return render(req, res, 'read_post');
 
-    let obj;
+    let obj = {};
     try
     {
-        let post = await op.read_post(req.params.id);
-        post.self_link = qr.escape(`/post/${req.params.id}`);
-        obj = { post : post };
+        obj.post = await op.read_post(req.params.id);
+        obj.post.self_link = qr.escape(`/post/${req.params.id}`);
+        obj.comments = await op.get_post_comments(req.params.id);
         return render(req, res, 'read_post', obj);
     }
     catch(err)
     {
-        return render(req, res, 'read_post', obj);
+        console.error(err);
+        return render(req, res, 'read_post', obj, false, 500);
     }
 });
 

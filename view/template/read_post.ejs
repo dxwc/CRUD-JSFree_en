@@ -60,6 +60,27 @@
     <p>Posted at <?= post.createdAt ?></p>
     <p>Updated at <?= post.updatedAt ?></p>
 </div>
+<? if(locals.comments && comments.constructor === Array) { ?>
+    <style>
+        .comment
+        {
+            border: 1px solid #ddd;
+            padding: 1%;
+            margin: 1%;
+        }
+        .right
+        {
+            float: right;
+        }
+    </style>
+    <? comments.forEach((c) => { ?>
+        <div id='<?= c.id ?>' class='comment'>
+            <p><?- c.content ?></p>
+            By: <a href='/user/<?= c.commenter ?>'><?= c.commenter ?></a>
+            <a class='right' href='/post/<?= post.id ?>#<?= c.id ?>'>link</a>
+        </div>
+    <? }); ?>
+<? } ?>
 <? } else { ?>
     Could not find any such post
 <? } ?>
