@@ -2,34 +2,37 @@
 
 <? if
 (
-    locals.id &&
-    locals.content &&
-    locals.by &&
-    locals.createdAt &&
-    locals.updatedAt
+    locals.post &&
+    locals.post.id &&
+    locals.post.content &&
+    locals.post.by &&
+    locals.post.createdAt &&
+    locals.post.updatedAt
 ) { ?>
-<p><?- content ?></p>
+<p><?- post.content ?></p>
 <? if
 (
     locals.name !== false &&
-    locals.by === locals.name
+    locals.post.by === locals.name
 ) { ?>
-<form method='GET' action='/post/<?= id ?>/update'>
-    <input type='hidden' name='username' value='<?= by ?>'>
+<form method='GET' action='/post/<?= post.id ?>/update'>
+    <input type='hidden' name='username' value='<?= post.by ?>'>
     <button type='submit'>Edit</button>
 </form>
-<form method='GET' action='/post/<?= id ?>/delete'>
-    <input type='hidden' name='username' value='<?= by ?>'>
+<form method='GET' action='/post/<?= post.id ?>/delete'>
+    <input type='hidden' name='username' value='<?= post.by ?>'>
     <button type='submit'>Delete</button>
 </form>
 <? } ?>
 <? if(locals.name !== false) { ?>
-<form method='GET' action='/contact/<?= locals.self_link ? self_link : "" ?>'>
+<form
+    method='GET'
+    action='/contact/<?= locals.post.self_link ? post.self_link : "" ?>'>
     <button type='submit'>Report</button>
 </form>
 <form method='POST' action='/comment'>
-    <input name='post_id' type='hidden' value='<?= id ?>'>
-    <input name='post_content' type='hidden' value='<?= content ?>'>
+    <input name='post_id' type='hidden' value='<?= post.id ?>'>
+    <input name='post_content' type='hidden' value='<?= post.content ?>'>
     <div>
         <label for='comment_w'>Write your comment here:</label>
     </div>
@@ -51,11 +54,11 @@
 </form>
 <? } ?>
 <div>
-    Posted by <?= by ?>
+    Posted by <?= post.by ?>
 </div>
 <div>
-    <p>Posted at <?= createdAt ?></p>
-    <p>Updated at <?= updatedAt ?></p>
+    <p>Posted at <?= post.createdAt ?></p>
+    <p>Updated at <?= post.updatedAt ?></p>
 </div>
 <? } else { ?>
     Could not find any such post
