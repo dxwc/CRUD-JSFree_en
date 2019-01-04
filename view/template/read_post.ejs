@@ -22,9 +22,32 @@
     <input type='hidden' name='username' value='<?= by ?>'>
     <button type='submit'>Delete</button>
 </form>
-<? } else if(locals.name !== false) { ?>
+<? } ?>
+<? if(locals.name !== false) { ?>
 <form method='GET' action='/contact/<?= locals.self_link ? self_link : "" ?>'>
     <button type='submit'>Report</button>
+</form>
+<form method='POST' action='/comment'>
+    <input name='post_id' type='hidden' value='<?= id ?>'>
+    <input name='post_content' type='hidden' value='<?= content ?>'>
+    <div>
+        <label for='comment_w'>Write your comment here:</label>
+    </div>
+    <div>
+        <textarea
+            name='comment_w'
+            type='text'
+            placeholder='Enter your comment here'
+            minlength='1'
+            autocomplete='off'
+            required><? if(locals.comment_w){ ?><?= comment_w ?><? } ?></textarea>
+    </div>
+    <? if(locals.info) { ?>
+        <div>
+            <?= info ?>
+        </div>
+    <? } ?>
+    <button type='submit'>Submit</button>
 </form>
 <? } ?>
 <div>

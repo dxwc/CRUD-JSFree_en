@@ -396,7 +396,13 @@ function create_comment(post_id, commenter, content, replying_to)
         commenter : commenter,
         content : val.escape(content),
         replying_to : replying_to ? replying_to : null
-    });
+    },
+    {
+        attributes : ['id'],
+        raw : true
+    })
+    .then((res) => res.id)
+    .catch((err) => { throw err; });
 }
 
 function read_comment(comment_id)

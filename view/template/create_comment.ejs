@@ -1,0 +1,31 @@
+<?- include('./common/layout_pre.ejs', { title : 'Comment', name : locals.name }) ?>
+<? if(locals.post_id && locals.post_content) { ?>
+<form method='POST' action='/comment'>
+    <input name='post_id' type='hidden' value='<?= post_id ?>'>
+    <input name='post_content' type='hidden' value='<?= post_content ?>'>
+    <div>
+        <label for='comment_w'>Write your comment here:</label>
+    </div>
+    <div>
+        <textarea
+            name='comment_w'
+            type='text'
+            placeholder='Enter your comment here'
+            minlength='1'
+            autocomplete='off'
+            required><? if(locals.comment_w){ ?><?= comment_w ?><? } ?></textarea>
+    </div>
+    <? if(locals.info) { ?>
+        <div>
+            <?= info ?>
+        </div>
+    <? } ?>
+    <button type='submit'>Submit</button>
+</form>
+<p><?- post_content ?></p>
+<a href='/post/<?= post_id ?>'>post link</a>
+<? } else { ?>
+    Encountered an unexpected error. Try going back and retrying. If problem
+    persists, contact admin.
+<? } ?>
+<?- include('./common/layout_post.ejs') ?>
