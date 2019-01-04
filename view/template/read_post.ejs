@@ -54,7 +54,7 @@
 </form>
 <? } ?>
 <div>
-    Posted by <?= post.by ?>
+    Posted by <a href='/user/<?= post.by ?>'><?= post.by ?></a>
 </div>
 <div>
     <p>Posted at <?= post.createdAt ?></p>
@@ -77,6 +77,7 @@
         <div id='<?= c.id ?>' class='comment'>
             <p><?- c.content ?></p>
             By: <a href='/user/<?= c.commenter ?>'><?= c.commenter ?></a>
+            <a href='/reply_to/<?= c.id ?>'>Reply</a>
             <a class='right' href='/post/<?= post.id ?>#<?= c.id ?>'>link</a>
         </div>
     <? }); ?>

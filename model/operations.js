@@ -410,9 +410,7 @@ function read_comment(comment_id)
     return model.comment.findOne
     (
         {
-            where : { id : comment_id }
-        },
-        {
+            where : { id : comment_id },
             raw : true
         }
     );

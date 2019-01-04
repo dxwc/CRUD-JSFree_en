@@ -1,0 +1,28 @@
+<?- include('./common/layout_pre.ejs', { title : 'Comment', name : locals.name }) ?>
+<form method='POST' action='/reply_to/<?= locals.id ?>'>
+    <div>
+        <label for='comment_w'>Write your comment here:</label>
+    </div>
+    <div>
+        <textarea
+            name='comment_w'
+            type='text'
+            placeholder='Enter your comment here'
+            minlength='1'
+            autocomplete='off'
+            required><? if(locals.comment_w){ ?><?= comment_w ?><? } ?></textarea>
+    </div>
+    <? if(locals.info) { ?>
+        <div>
+            <?= info ?>
+        </div>
+    <? } ?>
+    <button type='submit'>Submit</button>
+</form>
+<? if(locals.id && locals.post_id && locals.content) { ?>
+<p><?- content ?></p>
+<a href='/post/<?= post_id ?>#<?= id ?>'>comment link</a>
+<? } else { ?>
+    If you are signed in and this message appears, reload, retry or contact admin.
+<? } ?>
+<?- include('./common/layout_post.ejs') ?>
