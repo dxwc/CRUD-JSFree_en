@@ -10,6 +10,13 @@
     locals.post.updatedAt
 ) { ?>
 <p><?- post.content ?></p>
+<div>
+    Posted by <a href='/user/<?= post.by ?>'><?= post.by ?></a>
+</div>
+<div>
+    <p>Posted at <?= post.createdAt ?></p>
+    <p>Updated at <?= post.updatedAt ?></p>
+</div>
 <? if
 (
     locals.name !== false &&
@@ -53,13 +60,7 @@
     <button type='submit'>Submit</button>
 </form>
 <? } ?>
-<div>
-    Posted by <a href='/user/<?= post.by ?>'><?= post.by ?></a>
-</div>
-<div>
-    <p>Posted at <?= post.createdAt ?></p>
-    <p>Updated at <?= post.updatedAt ?></p>
-</div>
+
 <? if(locals.comments) { ?>
     <style>
         .comment
