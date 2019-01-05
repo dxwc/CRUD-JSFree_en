@@ -1,0 +1,10 @@
+<?- include('./common/layout_pre.ejs', { title : 'Delete', name : locals.name }) ?>
+<? info ?>
+<form method='POST' action='/confirm_delete/<?= id ?>'>
+    <input name='post_id' type='hidden' value='<?= post_id ?>'>
+    <button type='submit'>Confirm and delete comment</button>
+</form>
+The comment :
+<p><?- content ?></p>
+<a href='/post/<?= post_id ?>#<?= id ?>'>Link</a>
+<?- include('./common/layout_post.ejs') ?>

@@ -1,6 +1,6 @@
 const parse = require('node-html-parser').parse;
 
-module.exports = (comments) =>
+module.exports = (comments, name) =>
 {
     const html = parse(``);
     let prev_length = comments.length;
@@ -19,6 +19,8 @@ module.exports = (comments) =>
     <p>${comments[i].content}</p>
     By: <a href='/user/${comments[i].commenter}'>${comments[i].commenter}</a>
     <a href='/reply_to/${comments[i].id}'>Reply</a>
+    ${name === comments[i].commenter ?
+        `<a href='/delete_comment/${comments[i].id}'>Delete</a>` : ``}
     <a
         class='right'
         href='/post/${comments[i].post_id}#${comments[i].id}'>link</a>
@@ -41,10 +43,12 @@ module.exports = (comments) =>
     <p>${comments[i].content}</p>
     By: <a href='/user/${comments[i].commenter}'>${comments[i].commenter}</a>
     <a href='/reply_to/${comments[i].id}'>Reply</a>
+    ${name === comments[i].commenter ?
+        `<a href='/delete_comment/${comments[i].id}'>Delete</a>` : ``}
     <a
         class='right'
         href='/post/${comments[i].post_id}#${comments[i].id}'>link</a>
-</li>
+<li>
 </ul>`
                     )
                 )

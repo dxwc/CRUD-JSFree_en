@@ -431,11 +431,11 @@ function update_comment(comment_id, content)
     );
 }
 
-function delete_comment(comment_id)
+function delete_comment(comment_id, commenter)
 {
     return model.comment.destroy
     ({
-        where : { id : comment_id }
+        where : { id : comment_id, commenter : commenter }
     });
 }
 

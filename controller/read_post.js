@@ -15,7 +15,13 @@ router.get('/post/:id', async (req, res) =>
     {
         obj.post = await op.read_post(req.params.id);
         obj.post.self_link = qr.escape(`/post/${req.params.id}`);
-        obj.comments = thread(await op.get_post_comments(req.params.id));
+        obj.comments = !req.isAuthenticated() ?
+                            thread(await op.get_post_comments(req.params.id)) :
+                            thread
+                            (
+                                await op.get_post_comments(req.params.id),
+                                req.session.passport.user.uname
+                            );
         return render(req, res, 'read_post', obj);
     }
     catch(err)
