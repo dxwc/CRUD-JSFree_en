@@ -35,8 +35,14 @@ body
     /* background-color: #FBFCFC; */
     /* background: #F8F9F9; */
     background: #F0F3F4;
+}
 
+main
+{
+    float: none;
     max-width: 100%;
+    display: table;
+    margin: 0 auto;
 }
 
 button
