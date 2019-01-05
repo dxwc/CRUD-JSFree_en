@@ -3,6 +3,7 @@ let render = require('./function/render.js');
 let op     = require('../model/operations.js');
 let val    = require('validator');
 let qr     = require('querystring');
+let thread = require('./function/thread.js');
 
 router.get('/post/:id', async (req, res) =>
 {
@@ -14,7 +15,7 @@ router.get('/post/:id', async (req, res) =>
     {
         obj.post = await op.read_post(req.params.id);
         obj.post.self_link = qr.escape(`/post/${req.params.id}`);
-        obj.comments = await op.get_post_comments(req.params.id);
+        obj.comments = thread(await op.get_post_comments(req.params.id));
         return render(req, res, 'read_post', obj);
     }
     catch(err)

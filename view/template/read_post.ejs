@@ -60,7 +60,7 @@
     <p>Posted at <?= post.createdAt ?></p>
     <p>Updated at <?= post.updatedAt ?></p>
 </div>
-<? if(locals.comments && comments.constructor === Array) { ?>
+<? if(locals.comments) { ?>
     <style>
         .comment
         {
@@ -72,15 +72,12 @@
         {
             float: right;
         }
+        .comment li
+        {
+            list-style-type : none;
+        }
     </style>
-    <? comments.forEach((c) => { ?>
-        <div id='<?= c.id ?>' class='comment'>
-            <p><?- c.content ?></p>
-            By: <a href='/user/<?= c.commenter ?>'><?= c.commenter ?></a>
-            <a href='/reply_to/<?= c.id ?>'>Reply</a>
-            <a class='right' href='/post/<?= post.id ?>#<?= c.id ?>'>link</a>
-        </div>
-    <? }); ?>
+    <?- comments ?>
 <? } ?>
 <? } else { ?>
     Could not find any such post

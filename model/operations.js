@@ -447,10 +447,11 @@ function get_post_comments(post_id)
             a.content,
             a."createdAt",
             users.uname AS commenter,
-            a.replying_to
+            a.replying_to,
+            a.post_id
         FROM
             (
-                SELECT id, content, commenter, "createdAt", replying_to
+                SELECT id, content, commenter, "createdAt", replying_to, post_id
                 FROM comments
                 WHERE post_id='${post_id}'
                 ORDER BY "createdAt" ASC
