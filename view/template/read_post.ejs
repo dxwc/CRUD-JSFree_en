@@ -14,8 +14,7 @@
     Posted by <a href='/user/<?= post.by ?>'><?= post.by ?></a>
 </div>
 <div>
-    <p>Posted at <?= post.createdAt ?></p>
-    <p>Updated at <?= post.updatedAt ?></p>
+    <p title='Updated <?= post.updatedAt ?>'>Posted <?= post.createdAt ?></p>
 </div>
 <? if
 (

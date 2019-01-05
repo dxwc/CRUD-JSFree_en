@@ -124,6 +124,8 @@ function read_post(id, for_update)
         if(for_update) res.by = ready(res.by);
         res.by = querystr.escape(res.by);
         if(!for_update) res.content = md.render(res.content);
+        res.createdAt = moment(res.createdAt).fromNow();
+        res.updatedAt = moment(res.updatedAt).fromNow();
         res.id = id;
 
         return res;
