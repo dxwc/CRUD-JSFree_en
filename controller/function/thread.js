@@ -7,12 +7,12 @@ function a_comment(id, content, commenter, post_id, name)
     <p>${content}</p>
     <span class='meta_info'>
     wrote <a href='/user/${commenter}'>${commenter}</a>
-    ${name ? `<a class='comment_action' href='/reply_to/${id}'>reply</a>` : ``}
+    <a
+        class='comment_action'
+        href='/post/${post_id}#${id}'>link</a>
     ${name === commenter ?
         `<a class='comment_action' href='/delete_comment/${id}'>delete</a>` : ``}
-    <a
-        class='right'
-        href='/post/${post_id}#${id}'>link</a>
+    ${name ? `<a class='comment_action' href='/reply_to/${id}'>reply</a>` : ``}
     </span>
 <li>
 </ul>`
