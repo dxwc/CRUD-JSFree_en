@@ -49,7 +49,14 @@ router.post('/confirm_delete/:id', (req, res) =>
     .then(() =>
     {
         if(req.body.post_id) return res.redirect('/post/' + req.body.post_id);
-        else                 return res.send(`deleted`);
+        else                 return render
+        (
+            req,
+            res,
+            'error',
+            { info :
+                `Ignore the error warning. The comment was successfully deleted `}
+        );
     })
     .catch((err) =>
     {
