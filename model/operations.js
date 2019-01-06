@@ -358,14 +358,15 @@ function front_page()
         FROM
             (
                 SELECT id, content, by,"createdAt"
-                FROM posts
-                ORDER BY "createdAt" ASC
+                FROM posts ORDER BY "createdAt" DESC
                 LIMIT 100
             ) AS a
                 INNER JOIN
             users
         ON
-            users.id = a.by;
+            users.id = a.by
+        ORDER BY
+            a."createdAt" DESC;
         `,
         {
             type: model.sequelize.QueryTypes.SELECT,
