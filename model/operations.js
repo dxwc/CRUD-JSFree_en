@@ -457,13 +457,15 @@ function get_post_comments(post_id)
                 SELECT id, content, commenter, "createdAt", replying_to, post_id
                 FROM comments
                 WHERE post_id='${post_id}'
-                ORDER BY "createdAt" ASC
+                ORDER BY "createdAt" DESC
                 LIMIT 100
             ) AS a
                 INNER JOIN
             users
         ON
-            users.id = a.commenter;
+            users.id = a.commenter
+        ORDER BY
+            a."createdAt" ASC;
         `,
         {
             type: model.sequelize.QueryTypes.SELECT,

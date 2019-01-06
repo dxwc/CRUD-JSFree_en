@@ -1,4 +1,5 @@
 <?- include('./common/layout_pre.ejs', { title : 'User', name : locals.name }) ?>
+<span class='content'>
 <? if(locals.user_name) { ?>
 <h2>User: <?= locals.user_name ?></h2>
 <? if(locals.name && locals.user_name && locals.name !== locals.user_name) { ?>
@@ -27,5 +28,5 @@
 <? } else { ?>
     No such user found. If you think this is an error, please retry or contact admin.
 <? } ?>
-
+</span>
 <?- include('./common/layout_post.ejs') ?>

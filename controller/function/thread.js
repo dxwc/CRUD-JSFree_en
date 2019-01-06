@@ -1,5 +1,21 @@
 const parse = require('node-html-parser').parse;
 
+function a_comment(id, content, commenter, post_id, name)
+{
+    return `<ul id='${id}' class='comment'>
+<li>
+    <p>${content}</p>
+    <span class='meta_info'>wrote <a href='/user/${commenter}'>${commenter}</a></span>
+    ${name ? `<a href='/reply_to/${id}'>Reply</a>` : ``}
+    ${name === commenter ?
+        `<a href='/delete_comment/${id}'>Delete</a>` : ``}
+    <a
+        class='right meta_info'
+        href='/post/${post_id}#${id}'>link</a>
+<li>
+</ul>`
+}
+
 module.exports = (comments, name) =>
 {
     const html = parse(``);
@@ -14,18 +30,14 @@ module.exports = (comments, name) =>
                 (
                     parse
                     (
-`<ul id='${comments[i].id}' class='comment'>
-<li>
-    <p>${comments[i].content}</p>
-    By: <a href='/user/${comments[i].commenter}'>${comments[i].commenter}</a>
-    <a href='/reply_to/${comments[i].id}'>Reply</a>
-    ${name === comments[i].commenter ?
-        `<a href='/delete_comment/${comments[i].id}'>Delete</a>` : ``}
-    <a
-        class='right'
-        href='/post/${comments[i].post_id}#${comments[i].id}'>link</a>
-<li>
-</ul>`
+                        a_comment
+                        (
+                            comments[i].id,
+                            comments[i].content,
+                            comments[i].commenter,
+                            comments[i].post_id,
+                            name
+                        )
                     )
                 );
 
@@ -38,18 +50,14 @@ module.exports = (comments, name) =>
                 (
                     parse
                     (
-`<ul id='${comments[i].id}' class='comment'>
-<li>
-    <p>${comments[i].content}</p>
-    By: <a href='/user/${comments[i].commenter}'>${comments[i].commenter}</a>
-    <a href='/reply_to/${comments[i].id}'>Reply</a>
-    ${name === comments[i].commenter ?
-        `<a href='/delete_comment/${comments[i].id}'>Delete</a>` : ``}
-    <a
-        class='right'
-        href='/post/${comments[i].post_id}#${comments[i].id}'>link</a>
-<li>
-</ul>`
+                        a_comment
+                        (
+                            comments[i].id,
+                            comments[i].content,
+                            comments[i].commenter,
+                            comments[i].post_id,
+                            name
+                        )
                     )
                 )
 

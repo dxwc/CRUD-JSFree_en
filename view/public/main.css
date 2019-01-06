@@ -169,3 +169,19 @@ footer
         width: 20%;
     }
 }
+
+.comment
+{
+    border: 1px solid #979A9A;
+    padding: 1%;
+    margin: 1%;
+}
+.comment li, .li_style_none
+{
+    list-style-type : none;
+}
+
+.comment_content, .commenter
+{
+    display: inline;
+}
