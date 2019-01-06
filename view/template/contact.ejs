@@ -1,7 +1,9 @@
 <?- include('./common/layout_pre.ejs', { title : 'Contact', name : locals.name }) ?>
 <? if(locals.name === false) { ?>
+<span class='content'>
     You must be signed in to contact or make a report here.
     Alternatively you can email administrator at todo@example.com
+</span>
 <? } else { ?>
 <form method='POST' action='/contact'>
     <div>

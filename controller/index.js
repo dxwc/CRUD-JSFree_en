@@ -14,6 +14,9 @@ router.use(require('./follow.js'));
 router.use(require('./admin.js'));
 router.use(require('./create_comment.js'));
 router.use(require('./delete_comment.js'));
+router.get('/about', (req, res) => res.render('about'));
+router.get('/terms', (req, res) => res.render('terms'));
+router.get('/privacy', (req, res) => res.render('privacy'));
 router.use(require('./404.js')); // last route
 
 module.exports = router;
