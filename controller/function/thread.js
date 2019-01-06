@@ -1,12 +1,12 @@
 const parse = require('node-html-parser').parse;
 
-function a_comment(id, content, commenter, post_id, name)
+function a_comment(id, content, commenter, post_id, created_at, name)
 {
     return `<ul id='${id}' class='comment'>
 <li>
     <p>${content}</p>
     <span class='meta_info'>
-    wrote <a href='/user/${commenter}'>${commenter}</a>
+    <a href='/user/${commenter}'>${commenter}</a> ${created_at}
     <a
         class='comment_action'
         href='/post/${post_id}#${id}'>link</a>
@@ -38,6 +38,7 @@ module.exports = (comments, name) =>
                             comments[i].content,
                             comments[i].commenter,
                             comments[i].post_id,
+                            comments[i].createdAt,
                             name
                         )
                     )
@@ -58,6 +59,7 @@ module.exports = (comments, name) =>
                             comments[i].content,
                             comments[i].commenter,
                             comments[i].post_id,
+                            comments[i].createdAt,
                             name
                         )
                     )
