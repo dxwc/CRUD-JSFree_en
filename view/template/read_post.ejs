@@ -13,7 +13,7 @@
 <p><?- post.content ?></p>
 <div class='meta_info'>
     Posted by <a href='/user/<?= post.by ?>'><?= post.by ?></a>
-    <span title='Updated <?= post.updatedAt ?>'>Posted <?= post.createdAt ?></span>
+    <span title='Updated <?= post.updatedAt ?>'><?= post.createdAt ?></span>
 </div>
 <? if
 (
@@ -58,7 +58,7 @@
             <?= info ?>
         </div>
     <? } ?>
-    <button type='submit'>Submit</button>
+    <button class='submit' type='submit'>Submit</button>
 </form>
 <? } else { ?>
     <span class='meta_info'>
@@ -73,7 +73,9 @@
     <?- comments ?>
 <? } ?>
 <? } else { ?>
+<span class='content'>
     Could not find any such post
+</span>
 <? } ?>
 
 <?- include('./common/layout_post.ejs') ?>

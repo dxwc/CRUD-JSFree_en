@@ -1,6 +1,12 @@
 <?- include('./common/layout_pre.ejs', { title : 'ERROR', name : locals.name }) ?>
+<span class='content'>
 <h1>Encountered an unexpected error</h1>
 Sorry for the inconvenience.
 You may try reloading this page once to see if issue resolves itself.
 If this error persists, please <a href='/contact'>contact</a> an administrator.
+
+<? if(locals.info) { ?>
+    <?= locals.info ?>
+<? } ?>
+</span>
 <?- include('./common/layout_post.ejs') ?>

@@ -156,7 +156,8 @@ footer
     display: block;
     margin: 1%;
 }
-.main_form button
+
+.main_form button, .submit
 {
     border: 1px solid  #979A9A;
 }
@@ -181,7 +182,7 @@ footer
     list-style-type : none;
 }
 
-.comment_content, .commenter
+.comment_action
 {
-    display: inline;
+    margin-left: 1%;
 }

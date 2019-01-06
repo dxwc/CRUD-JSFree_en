@@ -1,4 +1,5 @@
 <?- include('./common/layout_pre.ejs', { title : 'Comment', name : locals.name }) ?>
+<span class='content'>
 <? if(locals.post_id && locals.post_content) { ?>
 <form method='POST' action='/comment'>
     <input name='post_id' type='hidden' value='<?= post_id ?>'>
@@ -28,4 +29,5 @@
     Encountered an unexpected error. Try going back and retrying. If problem
     persists, contact admin.
 <? } ?>
+</span>
 <?- include('./common/layout_post.ejs') ?>

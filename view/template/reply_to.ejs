@@ -1,14 +1,15 @@
 <?- include('./common/layout_pre.ejs', { title : 'Comment', name : locals.name }) ?>
 <? if(locals.id && locals.post_id && locals.content) { ?>
+<span class='content'>
     <p><?- content ?></p>
     <a href='/post/<?= post_id ?>#<?= id ?>'>comment link</a>
-    <hr>
+</span>
 <? } else { ?>
     If you are signed in and this message appears, reload, retry or contact admin.
 <? } ?>
 <form method='POST' action='/reply_to/<?= locals.id ?>'>
     <div>
-        <label for='comment_w'>Write your comment here:</label>
+        <label for='comment_w'>Write your reply to above comment here:</label>
     </div>
     <div>
         <textarea
@@ -24,6 +25,6 @@
             <?= info ?>
         </div>
     <? } ?>
-    <button type='submit'>Submit</button>
+    <button class='submit' type='submit'>Submit</button>
 </form>
 <?- include('./common/layout_post.ejs') ?>

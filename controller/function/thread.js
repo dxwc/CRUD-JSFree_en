@@ -5,13 +5,15 @@ function a_comment(id, content, commenter, post_id, name)
     return `<ul id='${id}' class='comment'>
 <li>
     <p>${content}</p>
-    <span class='meta_info'>wrote <a href='/user/${commenter}'>${commenter}</a></span>
-    ${name ? `<a href='/reply_to/${id}'>Reply</a>` : ``}
+    <span class='meta_info'>
+    wrote <a href='/user/${commenter}'>${commenter}</a>
+    ${name ? `<a class='comment_action' href='/reply_to/${id}'>reply</a>` : ``}
     ${name === commenter ?
-        `<a href='/delete_comment/${id}'>Delete</a>` : ``}
+        `<a class='comment_action' href='/delete_comment/${id}'>delete</a>` : ``}
     <a
-        class='right meta_info'
+        class='right'
         href='/post/${post_id}#${id}'>link</a>
+    </span>
 <li>
 </ul>`
 }
