@@ -37,20 +37,38 @@ body
     background: #F0F3F4;
 }
 
-main
+.content
 {
     float: none;
     max-width: 100%;
     display: table;
     margin: 0 auto;
+    margin-bottom: 1%;
 }
 
 button
 {
     padding: 0.3em;
     background-color: #FBFCFC;
-    border-bottom: 0.1em solid #979A9A;
+    /* border-bottom: 0.1em solid #979A9A; */
 }
+
+nav button, footer button
+{
+    border-top : 0.2em solid #979A9A;
+    border-bottom : 0.2em solid #979A9A;
+}
+
+.main_btn_left
+{
+    border-left : 0.2em solid #979A9A;
+}
+
+.main_btn_right
+{
+    border-right : 0.2em solid #979A9A;
+}
+
 
 button:hover
 {
@@ -65,7 +83,7 @@ nav, footer
     margin-bottom: 1em;
 }
 
-nav *, footer *
+nav *, footer *, .content form
 {
     display: inline;
     text-decoration : none;
@@ -109,8 +127,21 @@ a
     margin-bottom: 1em;
 }
 
-.meta_info, .meta_info *
+.meta_info, .meta_info *, label
 {
     color: #5D6D7E;
     font-style: italic;
+}
+
+textarea
+{
+    width: 100%;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+footer
+{
+    margin-top: 2%;
 }

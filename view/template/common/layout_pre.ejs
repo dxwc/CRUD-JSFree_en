@@ -10,27 +10,30 @@
 <body>
     <nav>
         <form method='GET' action='/'>
-            <button type='submit'>The Title</button>
+            <button class='main_btn_left' type='submit' title='🏠'>The Title</button>
         </form>
 <? if(!locals.name){ ?>
     <span class='right'>
         <form method='GET' action='/sign_in'>
-            <button type='submit'>Sign In</button>
+            <button type='submit'>🚪Sign In</button>
         </form>
         <form method='GET' action='/sign_up'>
-            <button type='submit'>Sign Up</button>
+            <button class='main_btn_right' type='submit'>🤝Sign Up</button>
         </form>
     </span>
 <? } else { ?>
         <form method='GET' action='/post'>
-            <button type='submit'>Post</button>
+            <button type='submit'>Post✍️</button>
         </form>
     <span class='right'>
         <form method='GET' action='/user/<?= name ?>'>
             <button type='submit'><?= name ?></button>
         </form>
         <form method='GET' action='/sign_out'>
-            <button class='warn' type='submit'>Sign Out</button>
+            <button
+                class='warn main_btn_right'
+                title='🚪'
+                type='submit'>Sign Out</button>
         </form>
     </span>
 <? } ?>

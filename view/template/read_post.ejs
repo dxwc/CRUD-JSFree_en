@@ -9,12 +9,11 @@
     locals.post.createdAt &&
     locals.post.updatedAt
 ) { ?>
+<span class='content'>
 <p><?- post.content ?></p>
-<div>
+<div class='meta_info'>
     Posted by <a href='/user/<?= post.by ?>'><?= post.by ?></a>
-</div>
-<div>
-    <p title='Updated <?= post.updatedAt ?>'>Posted <?= post.createdAt ?></p>
+    <span title='Updated <?= post.updatedAt ?>'>Posted <?= post.createdAt ?></span>
 </div>
 <? if
 (
@@ -36,6 +35,9 @@
     action='/contact/<?= locals.post.self_link ? post.self_link : "" ?>'>
     <button type='submit'>Report</button>
 </form>
+<? } ?>
+</span>
+<? if(locals.name !== false) { ?>
 <form method='POST' action='/comment'>
     <input name='post_id' type='hidden' value='<?= post.id ?>'>
     <input name='post_content' type='hidden' value='<?= post.content ?>'>
@@ -58,6 +60,10 @@
     <? } ?>
     <button type='submit'>Submit</button>
 </form>
+<? } else { ?>
+    <span class='meta_info'>
+        You must have an account and be signed in to write comment
+    </span>
 <? } ?>
 
 <? if(locals.comments) { ?>
