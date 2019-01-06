@@ -1,6 +1,6 @@
 <?- include('./common/layout_pre.ejs', { title : 'Sign In', name : locals.name }) ?>
 <? if(locals.name === false) { ?>
-<form method='POST' action='/sign_in'>
+<form class='main_form' method='POST' action='/sign_in'>
     <div>
         <label for='user_name'>Enter your user name:</label>
         <input
@@ -41,13 +41,13 @@
             required>
     </div>
     <? if(locals.info) { ?>
-    <div>
+    <div class='meta_info'>
         <?= info ?>
     </div>
     <? } ?>
     <div>
         <button
-            type='submit'>Submit</button>
+            type='submit'>Submit »</button>
     </div>
 </form>
 <? } else { ?>

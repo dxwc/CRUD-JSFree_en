@@ -9,16 +9,18 @@
 </head>
 <body>
     <nav>
-        <form method='GET' action='/'>
-            <button class='main_btn_left' type='submit' title='🏠'>The Title</button>
-        </form>
+        <a
+            style='text-decoration: none; border: none'
+            href='/'>
+            <img src='/fish_smaller_t.png'>
+        </a>
 <? if(!locals.name){ ?>
     <span class='right'>
         <form method='GET' action='/sign_in'>
             <button type='submit'>🚪Sign In</button>
         </form>
         <form method='GET' action='/sign_up'>
-            <button class='main_btn_right' type='submit'>🤝Sign Up</button>
+            <button type='submit'>🤝Sign Up</button>
         </form>
     </span>
 <? } else { ?>
@@ -31,7 +33,7 @@
         </form>
         <form method='GET' action='/sign_out'>
             <button
-                class='warn main_btn_right'
+                class='warn'
                 title='🚪'
                 type='submit'>Sign Out</button>
         </form>
