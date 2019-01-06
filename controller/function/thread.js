@@ -74,5 +74,5 @@ module.exports = (comments, name) =>
         else prev_length = comments.length;
     }
 
-    return html.toString();
+    return html.toString(); // <---- TOFIX: Undoes all previous XSS validation :(
 }
