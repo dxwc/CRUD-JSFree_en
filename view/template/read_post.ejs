@@ -11,34 +11,37 @@
 ) { ?>
 <span class='content'>
 <p><?- post.content ?></p>
-<div class='meta_info'>
+</span>
+<span class='meta_info'>
     Posted by <a href='/user/<?= post.by ?>'><?= post.by ?></a>
     <span title='Updated <?= post.updatedAt ?>'><?= post.createdAt ?></span>
-</div>
+</span>
 <? if
 (
     locals.name !== false &&
     locals.post.by === locals.name
 ) { ?>
-<form method='GET' action='/post/<?= post.id ?>/update'>
+<form class='inline' method='GET' action='/post/<?= post.id ?>/update'>
     <input type='hidden' name='username' value='<?= post.by ?>'>
-    <button type='submit'>Edit</button>
+    <button class='post_button' type='submit'>edit</button>
 </form>
-<form method='GET' action='/post/<?= post.id ?>/delete'>
+<form class='inline' method='GET' action='/post/<?= post.id ?>/delete'>
     <input type='hidden' name='username' value='<?= post.by ?>'>
-    <button type='submit'>Delete</button>
+    <button class='post_button' type='submit'>delete</button>
 </form>
 <? } ?>
 <? if(locals.name !== false) { ?>
 <form
+    class='inline'
     method='GET'
     action='/contact/<?= locals.post.self_link ? post.self_link : "" ?>'>
-    <button type='submit'>Report</button>
+    <button class='post_button' type='submit'>report</button>
 </form>
 <? } ?>
-</span>
 <? if(locals.name !== false) { ?>
-<form method='POST' action='/comment'>
+<br>
+<br>
+<form style='margin: 1%;' method='POST' action='/comment'>
     <input name='post_id' type='hidden' value='<?= post.id ?>'>
     <input name='post_content' type='hidden' value='<?= post.content ?>'>
     <div>
@@ -62,14 +65,11 @@
 </form>
 <? } else { ?>
     <span class='meta_info'>
-        You must have an account and be signed in to write comment
+        [ You must have an account and be signed in to write comment ]
     </span>
 <? } ?>
 
 <? if(locals.comments) { ?>
-    <style>
-
-    </style>
     <?- comments ?>
 <? } ?>
 <? } else { ?>

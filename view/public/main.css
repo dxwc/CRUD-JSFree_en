@@ -78,7 +78,7 @@ nav, footer
     margin-bottom: 1em;
 }
 
-nav *, footer *, .content form
+nav *, footer *, .content form, .inline
 {
     display: inline;
     text-decoration : none;
@@ -185,4 +185,9 @@ footer
 .comment_action
 {
     margin-left: 1%;
+}
+
+.post_button
+{
+    background : #fcefd1;
 }
