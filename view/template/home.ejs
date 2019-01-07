@@ -3,7 +3,7 @@
 <? if(locals.posts && posts.constructor === Array && posts.length) { ?>
 <? posts.forEach((p) => { ?>
 <div class='post'>
-    <p><?- p.content ?></p>
+    <p><span class='count'><?= p.replies ?><sub>comments</sub></span><?- p.content ?></p>
     <span class='meta_info'>
         posted by <a href='/user/<?= p.by ?>'><?= p.by ?></a>
         <?= p.createdAt ?>

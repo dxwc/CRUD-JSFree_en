@@ -380,7 +380,8 @@ function front_page()
             a.id,
             a.content,
             a."createdAt",
-            users.uname AS by
+            users.uname AS by,
+            (SELECT COUNT(*) FROM comments WHERE comments.post_id=a.id) AS replies
         FROM
             (
                 SELECT id, content, by,"createdAt"

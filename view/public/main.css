@@ -166,3 +166,15 @@ footer
 {
     margin-left: 1%;
 }
+
+.count
+{
+    font-weight: bold;
+    padding-right: 1%;
+}
+
+.count sub
+{
+    font-weight: normal;
+    font-size: 0.5em;
+}
