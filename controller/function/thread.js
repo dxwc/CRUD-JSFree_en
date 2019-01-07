@@ -1,4 +1,4 @@
-const parse = require('node-html-parser').parse;
+const cheerio = require('cheerio');
 
 function a_comment(id, content, commenter, post_id, created_at, name)
 {
@@ -20,7 +20,8 @@ function a_comment(id, content, commenter, post_id, created_at, name)
 
 module.exports = (comments, name) =>
 {
-    const html = parse(``);
+    let html = cheerio.load(`<span class='comments'></span>`, { xmlMode: true });
+
     let prev_length = comments.length;
     while(comments.length)
     {
@@ -28,42 +29,36 @@ module.exports = (comments, name) =>
         {
             if(comments[i].replying_to === null)
             {
-                html.appendChild
+                html('.comments').append
                 (
-                    parse
+                    a_comment
                     (
-                        a_comment
-                        (
-                            comments[i].id,
-                            comments[i].content,
-                            comments[i].commenter,
-                            comments[i].post_id,
-                            comments[i].createdAt,
-                            name
-                        )
+                        comments[i].id,
+                        comments[i].content,
+                        comments[i].commenter,
+                        comments[i].post_id,
+                        comments[i].createdAt,
+                        name
                     )
                 );
 
                 comments.splice(i, 1);
                 break;
             }
-            else if(html.querySelector('#' + comments[i].replying_to))
+            else if(html('#' + comments[i].replying_to).html())
             {
-                html.querySelector('#' + comments[i].replying_to).appendChild
+                html('#' + comments[i].replying_to).append
                 (
-                    parse
+                    a_comment
                     (
-                        a_comment
-                        (
-                            comments[i].id,
-                            comments[i].content,
-                            comments[i].commenter,
-                            comments[i].post_id,
-                            comments[i].createdAt,
-                            name
-                        )
+                        comments[i].id,
+                        comments[i].content,
+                        comments[i].commenter,
+                        comments[i].post_id,
+                        comments[i].createdAt,
+                        name
                     )
-                )
+                );
 
                 comments.splice(i, 1);
                 break;
@@ -74,5 +69,5 @@ module.exports = (comments, name) =>
         else prev_length = comments.length;
     }
 
-    return html.toString(); // <---- TOFIX: Undoes all previous XSS validation :(
+    return html.html();
 }
