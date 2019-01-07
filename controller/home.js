@@ -11,7 +11,7 @@ router.get('/', async (req, res) =>
             !global.front_page ||
             (
                 typeof(global.front_page_time) === 'number' &&
-                (new Date().getTime() - global.front_page_time > 60000)
+                (new Date().getTime() - global.front_page_time > 30000)
             )
         )
         {

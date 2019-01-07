@@ -41,15 +41,9 @@ input[type='image']
 
 button
 {
+    font-weight: normal;
     padding: 0.3em;
     background: #fcefd1;
-    /* background-color: #FBFCFC; */
-}
-
-nav button, footer button
-{
-    /* border-top : 0.2em solid #979A9A; */
-    /* border-bottom : 0.2em solid #979A9A; */
 }
 
 button:hover
@@ -171,9 +165,4 @@ footer
 .comment_action
 {
     margin-left: 1%;
-}
-
-.post_button
-{
-    background : #fcefd1;
 }

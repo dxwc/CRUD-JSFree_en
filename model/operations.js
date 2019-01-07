@@ -114,7 +114,7 @@ function read_post(id, for_update)
     )
     .then((res) =>
     {
-        if(!res || !res[0]) throw res;
+        if(!res || !res[0]) throw new Error(`Post doesn't exists`);
 
         res = res[0];
         if(!for_update)
@@ -155,14 +155,10 @@ function update_post(id, content, by)
 
 function delete_post(id, by)
 {
-    return model.post.destroy
-    ({
-        where : { id : id, by : by }
-    })
-    .catch((err) =>
-    {
-        throw err;
-    });
+    return model.post.findOne({ where : { id : id, by : by } })
+    .then(() => model.comment.destroy({ where : { post_id : id } }))
+    .then(() => model.post.destroy({ where : { id : id } }))
+    .catch((err) => { throw err; });
 }
 
 function get_posts(user_name)
