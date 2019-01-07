@@ -2,7 +2,7 @@ const cheerio = require('cheerio');
 
 function a_comment(id, content, commenter, post_id, created_at, name)
 {
-    return `<ul id='${id}' class='comment'>
+    return content ? `<ul id='${id}' class='comment'>
 <li>
     <p>${content}</p>
     <span class='meta_info'>
@@ -14,6 +14,14 @@ function a_comment(id, content, commenter, post_id, created_at, name)
         `<a class='comment_action' href='/delete_comment/${id}'>delete</a>` : ``}
     ${name ? `<a class='comment_action' href='/reply_to/${id}'>reply</a>` : ``}
     </span>
+<li>
+</ul>`
+:
+`<ul id='${id}' class='comment'>
+<li>
+    <i class='meta_info'>
+        [ Comment deleted. It is possible this was a reply to another comment. ]
+    </i>
 <li>
 </ul>`
 }
@@ -48,6 +56,36 @@ module.exports = (comments, name) =>
             else if(html('#' + comments[i].replying_to).html())
             {
                 html('#' + comments[i].replying_to).append
+                (
+                    a_comment
+                    (
+                        comments[i].id,
+                        comments[i].content,
+                        comments[i].commenter,
+                        comments[i].post_id,
+                        comments[i].createdAt,
+                        name
+                    )
+                );
+
+                comments.splice(i, 1);
+                break;
+            }
+            else
+            {
+                html('.comments').append
+                (
+                    a_comment
+                    (
+                        comments[i].replying_to,
+                        null,
+                        null,
+                        comments[i].post_id,
+                        null
+                    )
+                )
+
+                html(`#${comments[i].replying_to}`).append
                 (
                     a_comment
                     (
