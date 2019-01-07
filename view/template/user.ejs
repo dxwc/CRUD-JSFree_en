@@ -14,7 +14,14 @@
 <i class='meta_info'>(only visible to you)</i> :
 <ul>
     <? following.forEach((user) => { ?>
-    <li><a href='/user/<?= user.name ?>'><?= user.name ?></a></li>
+    <li><a href='/user/<?= user.name ?>'><?= user.name ?></a>
+        <form
+            class='unfollow'
+            method='POST'
+            action='/unfollow_confirm/<?= user.name ?>'>
+            <button class='warn'>Unfollow</button>
+        </form>
+    </li>
     <? }) ?>
 </ul>
 <? } ?>

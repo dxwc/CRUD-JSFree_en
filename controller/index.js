@@ -11,6 +11,7 @@ router.use(require('./delete_post.js'));
 router.use(require('./user.js'));
 router.use(require('./contact.js'));
 router.use(require('./follow.js'));
+router.use(require('./unfollow.js'));
 router.use(require('./admin.js'));
 router.use(require('./create_comment.js'));
 router.use(require('./delete_comment.js'));

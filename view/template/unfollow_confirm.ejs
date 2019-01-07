@@ -1,0 +1,15 @@
+<?- include('./common/layout_pre.ejs', { title : `Unfollow`, name : locals.name }) ?>
+<span class='content'>
+<? if(locals.name && locals.unfollow) { ?>
+Confirm you wish to unfollow user : <?= unfollow ?>
+<form method='POST' action='/unfollow/<?= unfollow ?>'>
+    <button class='warn' type='submit'>Unfollow</button>
+</form>
+<? } else if(!locals.name) { ?>
+    You must be signed in to unfollow a user you currently follow
+<? } else { ?>
+    There was an error, go back, reload and retry. If that doesn't fix it, contact
+    admin.
+<? } ?>
+</span>
+<?- include('./common/layout_post.ejs') ?>
