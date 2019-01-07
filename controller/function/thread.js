@@ -30,81 +30,65 @@ module.exports = (comments, name) =>
 {
     let html = cheerio.load(`<span class='comments'></span>`, { xmlMode: true });
 
-    let prev_length = comments.length;
-    while(comments.length)
+    for(let i = 0; i < comments.length; ++i)
     {
-        for(let i = 0; i < comments.length; ++i)
+        if(comments[i].replying_to === null)
         {
-            if(comments[i].replying_to === null)
-            {
-                html('.comments').append
+            html('.comments').append
+            (
+                a_comment
                 (
-                    a_comment
-                    (
-                        comments[i].id,
-                        comments[i].content,
-                        comments[i].commenter,
-                        comments[i].post_id,
-                        comments[i].createdAt,
-                        name
-                    )
-                );
-
-                comments.splice(i, 1);
-                break;
-            }
-            else if(html('#' + comments[i].replying_to).html())
-            {
-                html('#' + comments[i].replying_to).append
-                (
-                    a_comment
-                    (
-                        comments[i].id,
-                        comments[i].content,
-                        comments[i].commenter,
-                        comments[i].post_id,
-                        comments[i].createdAt,
-                        name
-                    )
-                );
-
-                comments.splice(i, 1);
-                break;
-            }
-            else
-            {
-                html('.comments').append
-                (
-                    a_comment
-                    (
-                        comments[i].replying_to,
-                        null,
-                        null,
-                        comments[i].post_id,
-                        null
-                    )
+                    comments[i].id,
+                    comments[i].content,
+                    comments[i].commenter,
+                    comments[i].post_id,
+                    comments[i].createdAt,
+                    name
                 )
-
-                html(`#${comments[i].replying_to}`).append
-                (
-                    a_comment
-                    (
-                        comments[i].id,
-                        comments[i].content,
-                        comments[i].commenter,
-                        comments[i].post_id,
-                        comments[i].createdAt,
-                        name
-                    )
-                );
-
-                comments.splice(i, 1);
-                break;
-            }
+            );
         }
+        else if(html('#' + comments[i].replying_to).html())
+        {
+            html('#' + comments[i].replying_to).append
+            (
+                a_comment
+                (
+                    comments[i].id,
+                    comments[i].content,
+                    comments[i].commenter,
+                    comments[i].post_id,
+                    comments[i].createdAt,
+                    name
+                )
+            );
+        }
+        else
+        {
+            html('.comments').append
+            (
+                a_comment
+                (
+                    comments[i].replying_to,
+                    null,
+                    null,
+                    comments[i].post_id,
+                    null
+                )
+            );
 
-        if(prev_length === comments.length) break;
-        else prev_length = comments.length;
+            html(`#${comments[i].replying_to}`).append
+            (
+                a_comment
+                (
+                    comments[i].id,
+                    comments[i].content,
+                    comments[i].commenter,
+                    comments[i].post_id,
+                    comments[i].createdAt,
+                    name
+                )
+            );
+        }
     }
 
     return html.html();
