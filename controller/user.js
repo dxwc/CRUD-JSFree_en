@@ -7,6 +7,7 @@ router.get('/user/:user_name', async (req, res) =>
     try
     {
         let posts = await op.get_posts(req.params.user_name);
+        let comments = await op.get_comments(req.params.user_name);
 
         let following;
         if
@@ -25,6 +26,7 @@ router.get('/user/:user_name', async (req, res) =>
             'user',
             {
                 posts     : posts,
+                comments  : comments,
                 following : following,
                 user_name : req.params.user_name
             }
@@ -32,6 +34,7 @@ router.get('/user/:user_name', async (req, res) =>
     }
     catch(err)
     {
+        console.log(err);
         return render(req, res, 'user', null, false, 404);
     }
 });

@@ -195,6 +195,36 @@ function get_posts(user_name)
     });
 }
 
+function get_comments(user_name)
+{
+    return model.user.findOne
+    ({
+        where : { uname : val.escape(user_name) },
+        attributes : ['id']
+    })
+    .then((res) =>
+    {
+        if(!res || !res.id) throw new Error('No such user');
+        return model.comment.findAll
+        ({
+            where : { commenter : res.id },
+            order : [ [ 'createdAt', 'DESC' ] ],
+            limit : 100,
+            raw   : true,
+            attributes : ['id', 'post_id', 'createdAt']
+        });
+    })
+    .then((arr) =>
+    {
+        arr.forEach((res) => res.createdAt = moment(res.createdAt).fromNow())
+        return arr;
+    })
+    .catch((err) =>
+    {
+        throw err;
+    });
+}
+
 function create_report(user_name, content)
 {
     return model.user.findOne
@@ -494,6 +524,7 @@ module.exports.read_post         = read_post;
 module.exports.update_post       = update_post;
 module.exports.delete_post       = delete_post;
 module.exports.get_posts         = get_posts;
+module.exports.get_comments      = get_comments;
 module.exports.create_report     = create_report;
 module.exports.report_response   = report_response;
 module.exports.delete_report     = delete_report;

@@ -1,17 +1,20 @@
 <?- include('./common/layout_pre.ejs', { title : 'User', name : locals.name }) ?>
-<span class='content'>
+<span class='content' style='text-align: center'>
 <? if(locals.user_name) { ?>
-<h2>User: <?= locals.user_name ?></h2>
-<br>
+<h1><?= locals.user_name ?></h1>
 <? if(locals.name && locals.user_name && locals.name !== locals.user_name) { ?>
+<br>
 <form method='POST' action='/follow/<?= user_name ?>'>
     <button type='submit'>Follow</button>
 </form>
 <br>
 <? } ?>
 <? if(locals.following && following.constructor === Array && following.length) { ?>
+<br>
 <b>You are following these users </b><br>
 <i class='meta_info'>(only visible to you)</i> :
+<br>
+<br>
 <ul>
     <? following.forEach((user) => { ?>
     <li><a href='/user/<?= user.name ?>'><?= user.name ?></a>
@@ -34,6 +37,16 @@
         <li><a href='/post/<?= post.id ?>'><?= post.createdAt ?></a></li>
     <? }); ?>
 </ul>
+<? } ?>
+<? if(locals.comments && comments.constructor === Array && comments.length) { ?>
+    <br>
+    <h3>Comments: </h3>
+    <br>
+    <ul>
+        <? comments.forEach((c) => { ?>
+            <li><a href='/post/<?= c.post_id ?>#<?= c.id ?>'><?= c.createdAt ?></a></li>
+        <? }); ?>
+    </ul>
 <? } ?>
 <? } else { ?>
 <span class='content'>
