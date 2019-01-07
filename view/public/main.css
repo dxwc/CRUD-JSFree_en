@@ -5,7 +5,7 @@ form
     line-height: 1em;
 }
 
-body *
+body, body *
 {
     color : black;
     background-color: transparent;
@@ -13,7 +13,7 @@ body *
     border: 0;
     margin: 0;
     padding: 0;
-    font-size: calc(12px + 1.5vw)
+    font-size: calc(12px + 1.5vw);
 }
 
 body
@@ -36,7 +36,10 @@ input[type='image']
     max-width: 100%;
     display: table;
     margin: 0 auto;
-    margin-bottom: 1%;
+    padding-bottom: 1%;
+    display: inline;
+    word-wrap: break-word;
+    overflow: auto;
 }
 
 button
@@ -156,6 +159,8 @@ footer
     border: 1px solid #979A9A;
     padding: 1%;
     margin: 1%;
+    word-wrap: break-word;
+    overflow: auto;
 }
 .comment li, .li_style_none
 {
