@@ -61,6 +61,8 @@ router.post('/sign_up', (req, res) =>
     {
         // signed up
 
+        req.body.user_name = recieved.user_name;
+
         // sign user in at the same time :
         passport.authenticate
         (
