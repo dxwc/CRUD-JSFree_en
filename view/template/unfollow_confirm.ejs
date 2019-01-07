@@ -3,7 +3,7 @@
 <? if(locals.name && locals.unfollow) { ?>
 Confirm you wish to unfollow user : <?= unfollow ?>
 <form method='POST' action='/unfollow/<?= unfollow ?>'>
-    <button class='warn' type='submit'>Unfollow</button>
+    <button class='submit warn' type='submit'>Unfollow</button>
 </form>
 <? } else if(!locals.name) { ?>
     You must be signed in to unfollow a user you currently follow
