@@ -4,6 +4,7 @@ let passport = require('passport');
 let op      = require('../model/operations');
 let render  = require('./function/render.js');
 let captcha = require('./function/captcha.js');
+let safe    = require('./function/encode_safe.js');
 
 router.get('/sign_up', (req, res) =>
 {
@@ -19,7 +20,10 @@ router.post('/sign_up', (req, res) =>
     let recieved = { };
 
     if(typeof(req.body.user_name) === 'string' && req.body.user_name.trim().length)
+    {
         recieved.user_name = req.body.user_name.trim();
+        recieved.user_name = safe(recieved.user_name);
+    }
     if(typeof(req.body.password) === 'string' && req.body.password.length)
         recieved.password = req.body.password;
 
@@ -42,7 +46,7 @@ router.post('/sign_up', (req, res) =>
 
     // Valid input
 
-    // Get max of 10 character for username
+    // Get max of 30 character for username
     let temp = '';
     for(let i = 0; i < recieved.user_name.length; ++i)
     {
@@ -71,8 +75,8 @@ router.post('/sign_up', (req, res) =>
                     (
                         req,
                         res,
-                        '/sign_in',
-                        { info : 'Login to get started' },
+                        'error',
+                        { info : 'Sign in to get started' },
                         true
                     );
                 }
@@ -88,8 +92,8 @@ router.post('/sign_up', (req, res) =>
                             (
                                 req,
                                 res,
-                                '/sign_in',
-                                { info : 'Login to get started' },
+                                'error',
+                                { info : 'Sign in to get started' },
                                 true
                             );
                         }

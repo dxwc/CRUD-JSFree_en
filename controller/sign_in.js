@@ -3,6 +3,7 @@ let passport = require('passport');
 
 let render  = require('./function/render.js');
 let captcha = require('./function/captcha.js');
+let safe    = require('./function/encode_safe.js');
 
 router.get('/sign_in', (req, res) =>
 {
@@ -30,7 +31,11 @@ router.post('/sign_in', (req, res) =>
         return render(req, res, 'sign_in', req.body, true, 409);
     }
 
-    // sign user in at the same time :
+    if(req.body.user_name)
+    {
+        req.body.user_name = safe(req.body.user_name);
+    }
+
     passport.authenticate
     (
         'local',
