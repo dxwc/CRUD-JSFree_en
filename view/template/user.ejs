@@ -4,16 +4,17 @@
 <h1><?= locals.user_name ?></h1>
 <? if(locals.name && locals.user_name && locals.name !== locals.user_name) { ?>
 <br>
-<form method='POST' action='/follow/<?= user_name ?>'>
-    <button type='submit'>Follow</button>
+<form style='display: block;' method='POST' action='/follow/<?= user_name ?>'>
+    <button class='submit' type='submit'>Follow</button>
 </form>
 <br>
 <? } ?>
 <? if(locals.following && following.constructor === Array && following.length) { ?>
 <br>
-<b>You are following these users </b><br>
-<i class='meta_info'>(only visible to you)</i> :
-<br>
+<span style='display : block'>
+    <b>You are following these users </b><br>
+    <i class='meta_info'>(only visible to you)</i> :
+</span>
 <br>
 <ul>
     <? following.forEach((user) => { ?>
@@ -22,7 +23,7 @@
             class='unfollow'
             method='POST'
             action='/unfollow_confirm/<?= user.name ?>'>
-            <button class='warn'>Unfollow</button>
+            <button class='submit warn'>Unfollow</button>
         </form>
     </li>
     <? }) ?>
