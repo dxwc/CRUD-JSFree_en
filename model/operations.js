@@ -5,6 +5,7 @@ let xss      = require('xss-filters');
 let querystr = require('querystring');
 let moment   = require('moment');
 let md       = require('markdown-it')({ breaks: true, linkify : true });
+let img      = require('../controller/function/img.js');
 
 md.disable('link');
 md.disable('image');
@@ -126,6 +127,7 @@ function read_post(id, for_update)
         if(!for_update)
         {
             res.content = md.render(res.content);
+            res.content = img(res.content);
         }
         res.createdAt = moment(res.createdAt).fromNow();
         res.updatedAt = moment(res.updatedAt).fromNow();
