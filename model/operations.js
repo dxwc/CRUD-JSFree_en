@@ -393,7 +393,7 @@ function front_page(show_new, remove_time_limit, offset)
                 WHERE comments.post_id=a.id) AS replies
         FROM
             (
-                SELECT
+                (SELECT
                     id,
                     SUBSTRING(content, 1, 300) AS content,
                     by,
@@ -403,7 +403,18 @@ function front_page(show_new, remove_time_limit, offset)
                     `` :
                     `WHERE "createdAt" > NOW() - INTERVAL '1 week'`}
                 ORDER BY "createdAt" DESC
-                ${typeof(offset) === 'number' ? `OFFSET ${offset}` : `` } LIMIT 100
+                ${typeof(offset) === 'number' ? `OFFSET ${offset}` : `` } LIMIT 100)
+                ${!show_new && !remove_time_limit && !offset ?
+                `UNION
+                (SELECT
+                    id,
+                    SUBSTRING(content, 1, 300) AS content,
+                    by,
+                    "createdAt"
+                FROM posts
+                    ORDER BY "createdAt" DESC LIMIT 20)
+                ` : ``
+                }
             ) AS a
                 INNER JOIN
             users
