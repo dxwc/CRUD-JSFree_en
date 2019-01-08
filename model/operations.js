@@ -389,7 +389,11 @@ function front_page(show_new, remove_time_limit, offset)
                 WHERE comments.post_id=a.id) AS replies
         FROM
             (
-                SELECT id, content, by,"createdAt"
+                SELECT
+                    id,
+                    SUBSTRING(content, 1, 300) AS content,
+                    by,
+                    "createdAt"
                 FROM posts
                 ${ remove_time_limit ?
                     `` :
@@ -415,10 +419,8 @@ function front_page(show_new, remove_time_limit, offset)
         arr.forEach((res) =>
         {
             res.createdAt = moment(res.createdAt).fromNow();
-                res.content = res.content.length > 100 ?
-                                ready(res.content.substr(0, 100) + ' ...') :
-                                ready(res.content);
-            res.by = ready(res.by);
+            res.content   = ready(res.content);
+            res.by        = ready(res.by);
         });
 
         return arr;
