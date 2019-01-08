@@ -119,11 +119,14 @@ function read_post(id, for_update)
         res = res[0];
         if(!for_update)
         {
-            Reflect.ownKeys(res).forEach((key) => res[key] = ready(res[key]));
+            res.content = ready(res.content);
+            res.by      = ready(res.by);
         }
-        if(for_update) res.by = ready(res.by);
         res.by = querystr.escape(res.by);
-        if(!for_update) res.content = md.render(res.content);
+        if(!for_update)
+        {
+            res.content = md.render(res.content);
+        }
         res.createdAt = moment(res.createdAt).fromNow();
         res.updatedAt = moment(res.updatedAt).fromNow();
         res.id = id;
