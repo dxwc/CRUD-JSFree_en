@@ -419,8 +419,15 @@ function front_page(show_new, remove_time_limit, offset)
         arr.forEach((res) =>
         {
             res.createdAt = moment(res.createdAt).fromNow();
-            res.content   = ready(res.content);
-            res.by        = ready(res.by);
+            if(res.content.length === 300)
+            {
+                res.content = ready(res.content + ' ...');
+            }
+            else
+            {
+                res.content = ready(res.content);
+            }
+            res.by = ready(res.by);
         });
 
         return arr;
