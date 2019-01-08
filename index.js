@@ -21,6 +21,7 @@ require('ejs').delimiter = '?';
 app.set('view engine', 'ejs');
 app.set('views', './view/template/');
 
+app.use(require('./controller/middleware/previous.js'));
 app.use(require('./controller/'));
 
 let http_server;

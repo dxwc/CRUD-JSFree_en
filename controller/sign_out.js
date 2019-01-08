@@ -9,7 +9,7 @@ router.get('/sign_out', (req, res) =>
 router.post('/sign_out', (req, res) =>
 {
     req.logOut();
-    return res.redirect('/');
+    return res.redirect(req.session.previous ? req.session.previous : '/');
 });
 
 module.exports = router;
