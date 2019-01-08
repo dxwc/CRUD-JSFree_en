@@ -185,7 +185,7 @@ function connect()
         sequelize.sync
         ({
             logging : false,
-            // force: true, // deletes all data
+            // // force: true, // !!! DELETES ALL DATA !!!
             // alter : true // deleted data where necessary
         })
         .then(() =>
