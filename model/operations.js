@@ -371,7 +371,7 @@ function delete_follow(user_id, following_name)
     });
 }
 
-function front_page()
+function front_page(show_new, remove_time_limit, offset)
 {
     return model.sequelize.query
     (
@@ -381,19 +381,30 @@ function front_page()
             a.content,
             a."createdAt",
             users.uname AS by,
-            (SELECT COUNT(*) FROM comments WHERE comments.post_id=a.id) AS replies
+            (SELECT COUNT(distinct commenter)
+                FROM comments
+                WHERE comments.post_id=a.id) AS real_replies,
+            (SELECT COUNT(*)
+                FROM comments
+                WHERE comments.post_id=a.id) AS replies
         FROM
             (
                 SELECT id, content, by,"createdAt"
-                FROM posts ORDER BY "createdAt" DESC
-                LIMIT 100
+                FROM posts
+                ${ remove_time_limit ?
+                    `` :
+                    `WHERE "createdAt" > NOW() - INTERVAL '1 week'`}
+                ORDER BY "createdAt" DESC
+                ${typeof(offset) === 'number' ? `OFFSET ${offset}` : `` } LIMIT 100
             ) AS a
                 INNER JOIN
             users
         ON
             users.id = a.by
         ORDER BY
-            a."createdAt" DESC;
+            ${show_new ?
+            `"createdAt" DESC;` :
+            `real_replies DESC;`}
         `,
         {
             type: model.sequelize.QueryTypes.SELECT,
