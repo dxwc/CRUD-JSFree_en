@@ -26,6 +26,7 @@ router.get('/post/:id', async (req, res) =>
     }
     catch(err)
     {
+        console.log(err);
         return render(req, res, 'read_post', obj, false, 500);
     }
 });

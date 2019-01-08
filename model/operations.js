@@ -118,16 +118,15 @@ function read_post(id, for_update)
         if(!res || !res[0]) throw new Error(`Post doesn't exists`);
 
         res = res[0];
+        res.by = ready(res.by);
         if(!for_update)
         {
-            res.content = ready(res.content);
-            res.by      = ready(res.by);
+            res.content = img(md.render(ready(res.content)));
         }
-        res.by = querystr.escape(res.by);
-        if(!for_update)
+        else
         {
-            res.content = md.render(res.content);
-            res.content = img(res.content);
+            res.content = val.unescape(res.content);
+            res.by      = querystr.escape(res.by);
         }
         res.createdAt = moment(res.createdAt).fromNow();
         res.updatedAt = moment(res.updatedAt).fromNow();
@@ -468,7 +467,18 @@ function read_comment(comment_id)
             where : { id : comment_id },
             raw : true
         }
-    );
+    )
+    .then((res) =>
+    {
+        if(!res) throw new Error('comment not found');
+        res.content = img(md.render(ready(res.content)));
+
+        return res;
+    })
+    .catch((err) =>
+    {
+        throw err;
+    })
 }
 
 function update_comment(comment_id, content)
@@ -528,7 +538,7 @@ function get_post_comments(post_id)
         arr.forEach((res) =>
         {
             res.createdAt = moment(res.createdAt).fromNow();
-            res.content = md.render(ready(res.content));
+            res.content = img(md.render(ready(res.content)));
             res.commenter = ready(res.commenter);
         });
 
