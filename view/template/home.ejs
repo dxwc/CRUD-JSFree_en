@@ -12,7 +12,9 @@
             <?= p.replies ?><sub>comments</sub>
             </a>
         </span>
-        <?- p.content ?>
+        <a href='/post/<?= p.id ?>'>
+            <?- p.content ?>
+        </a>
     </p>
     <span class='meta_info'>
         posted by <a href='/user/<?= p.by ?>'><?= p.by ?></a>
