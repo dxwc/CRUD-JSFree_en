@@ -187,6 +187,12 @@ footer
     font-size: 0.5em;
 }
 
+.count a
+{
+    text-decoration: none;
+    border: none;
+}
+
 h1 { font-size: 3em; }
 h2 { font-size: 2.5em; }
 h3 { font-size: 2em; }
