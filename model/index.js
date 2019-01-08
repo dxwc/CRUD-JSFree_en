@@ -1,4 +1,6 @@
 const Sequelize = require('sequelize');
+const SQstore   = require('connect-session-sequelize')
+                  (require('express-session').Store);
 
 const sequelize = process.env.DATABASE_URL ?
 new Sequelize
@@ -174,6 +176,8 @@ const follow = sequelize.define
     }
 );
 
+const myStore = new SQstore({ db : sequelize });
+
 function connect()
 {
     return new Promise((resolve, reject) =>
@@ -186,6 +190,7 @@ function connect()
         })
         .then(() =>
         {
+            myStore.sync();
             console.info('- DB server connection started');
             return resolve(sequelize);
         })
@@ -199,9 +204,10 @@ function connect()
 }
 
 module.exports.sequelize = sequelize;
-module.exports.connect = connect;
-module.exports.user = user;
-module.exports.post = post;
-module.exports.comment = comment;
-module.exports.report = report;
-module.exports.follow = follow;
+module.exports.connect   = connect;
+module.exports.user      = user;
+module.exports.post      = post;
+module.exports.comment   = comment;
+module.exports.report    = report;
+module.exports.follow    = follow;
+module.exports.store     = myStore;

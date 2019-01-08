@@ -4,8 +4,6 @@ Run once:
 
 + `sudo -u postgres createuser -P -s -e site_admin` and set account password: `site_pass`
 + `sudo -u postgres createdb site --owner site_admin`
-+ `sudo psql -U site_admin -d site -W < ./node_modules/connect-pg-simple/table.sql`
-    + TODO: add session store
 
 One way to browse and manipulate data :
 

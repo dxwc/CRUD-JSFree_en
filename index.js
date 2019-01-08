@@ -1,16 +1,26 @@
 const express  = require('express');
 const app      = express();
 const passport = require('./controller/middleware/auth.js');
+const session  = require('express-session');
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use
 (
-    require('express-session')
+    session
     ({
+        store             : require('./model/index.js').store,
         secret            : process.env.SESSION_SECRET || 'CHANGE_ME',
-        resave            : true,
-        saveUninitialized : true
+        resave            : false,
+        saveUninitialized : true,
+        cookie            :
+        {
+            httpOnly : false,
+            // secure   : true,
+            secure   : false,
+            maxAge   : null
+            // maxAge   : 30 * 24 * 60 * 60 * 1000 // 30 days
+        }
     })
 );
 app.use(passport.initialize());
