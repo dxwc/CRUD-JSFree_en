@@ -171,7 +171,7 @@ footer
 }
 .comment li, .li_style_none
 {
-    list-style-type : none;
+    list-style : none;
 }
 
 .comment_action
@@ -203,3 +203,19 @@ h3 { font-size: 1.7em; }
 h4 { font-size: 1.5em; }
 h5 { font-size: 1.3em; }
 h6 { font-size: 1.2em; }
+
+.profile h1,
+.profile h2,
+.profile h3,
+.profile h4,
+.profile h5,
+.profile h6,
+.profile form
+{
+    text-align: center;
+}
+
+.profile table, .profile form
+{
+    margin: 0 auto;
+}

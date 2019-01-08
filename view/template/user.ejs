@@ -1,53 +1,81 @@
 <?- include('./common/layout_pre.ejs', { title : 'User', name : locals.name }) ?>
-<span class='content' style='text-align: center'>
+<span class='profile'>
 <? if(locals.user_name) { ?>
 <h1><?= locals.user_name ?></h1>
 <? if(locals.name && locals.user_name && locals.name !== locals.user_name) { ?>
 <br>
-<form style='display: block;' method='POST' action='/follow/<?= user_name ?>'>
+<form method='POST' action='/follow/<?= user_name ?>'>
     <button class='submit' type='submit'>Follow</button>
 </form>
 <br>
 <? } ?>
 <? if(locals.following && following.constructor === Array && following.length) { ?>
 <br>
-<span style='display : block'>
-    <b>You are following these users </b><br>
-    <i class='meta_info'>(only visible to you)</i> :
-</span>
+    <h5>You are following these users <i class='meta_info'>(only visible to you)</i></h5>
 <br>
-<ul>
-    <? following.forEach((user) => { ?>
-    <li><a href='/user/<?= user.name ?>'><?= user.name ?></a>
-        <form
-            class='unfollow'
-            method='POST'
-            action='/unfollow_confirm/<?= user.name ?>'>
-            <button class='submit warn'>Unfollow</button>
-        </form>
-    </li>
-    <? }) ?>
-</ul>
+<table>
+<? following.forEach((user) => { ?>
+    <tr>
+        <td>
+            <a href='/user/<?= user.name ?>'><?= user.name ?>
+        </td>
+        <td>
+            <form
+                class='unfollow'
+                method='POST'
+                action='/unfollow_confirm/<?= user.name ?>'>
+                <button class='submit warn'>Unfollow</button>
+            </form>
+        </td>
+    </tr>
+<? }) ?>
+</table>
 <? } ?>
 <? if(locals.posts && posts.constructor === Array && posts.length) { ?>
 <br>
 <h3>Posts: </h3>
 <br>
-<ul>
-    <? posts.forEach((post) => { ?>
-        <li><a href='/post/<?= post.id ?>'><?= post.createdAt ?></a></li>
-    <? }); ?>
-</ul>
+<table>
+<? posts.forEach((p) => { ?>
+    <tr>
+        <td>
+            <a href='/post/<?= p.id ?>'>
+                <?= p.content ?>
+            </a>
+        </td>
+        <td>
+            <a
+                class='meta_info'
+                href='/post/<?= p.id ?>'>
+                <?= p.createdAt ?>
+            </a>
+        </td>
+    </tr>
+<? }); ?>
+</table>
 <? } ?>
 <? if(locals.comments && comments.constructor === Array && comments.length) { ?>
-    <br>
-    <h3>Comments: </h3>
-    <br>
-    <ul>
-        <? comments.forEach((c) => { ?>
-            <li><a href='/post/<?= c.post_id ?>#<?= c.id ?>'><?= c.createdAt ?></a></li>
-        <? }); ?>
-    </ul>
+<br>
+<h3>Comments: </h3>
+<br>
+<table>
+<? comments.forEach((c) => { ?>
+    <tr>
+        <td>
+            <a href='/post/<?= c.post_id ?>#<?= c.id ?>'>
+                <?= c.content ?>
+            </a>
+        </td>
+        <td>
+            <a
+                class='meta_info'
+                href='/post/<?= c.post_id ?>#<?= c.id ?>'>
+                <?= c.createdAt ?>
+            </a>
+        </td>
+    </tr>
+<? }); ?>
+</table>
 <? } ?>
 <? } else { ?>
 <span class='content'>

@@ -181,12 +181,24 @@ function get_posts(user_name)
             order : [ [ 'createdAt', 'DESC' ] ],
             limit : 100,
             raw   : true,
-            attributes : ['id', 'createdAt']
+            attributes : ['id', 'content', 'createdAt']
         });
     })
     .then((arr) =>
     {
-        arr.forEach((res) => res.createdAt = moment(res.createdAt).fromNow())
+        arr.forEach((res) =>
+        {
+            if(res.content.length > 20)
+            {
+                res.content = ready(res.content.substr(0, 20) + ' ...');
+            }
+            else
+            {
+                res.content = ready(res.content);
+            }
+            res.createdAt = moment(res.createdAt).fromNow();
+        });
+
         return arr;
     })
     .catch((err) =>
@@ -211,12 +223,24 @@ function get_comments(user_name)
             order : [ [ 'createdAt', 'DESC' ] ],
             limit : 100,
             raw   : true,
-            attributes : ['id', 'post_id', 'createdAt']
+            attributes : ['id', 'content', 'post_id', 'createdAt']
         });
     })
     .then((arr) =>
     {
-        arr.forEach((res) => res.createdAt = moment(res.createdAt).fromNow())
+        arr.forEach((res) =>
+        {
+            if(res.content.length > 20)
+            {
+                res.content = ready(res.content.substr(0, 20) + ' ...');
+            }
+            else
+            {
+                res.content = ready(res.content);
+            }
+            res.createdAt = moment(res.createdAt).fromNow();
+        });
+
         return arr;
     })
     .catch((err) =>
