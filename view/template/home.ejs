@@ -1,6 +1,9 @@
 <?- include('./common/layout_pre.ejs', { title : 'Home', name : locals.name }) ?>
 <span class='content'>
 <? if(locals.posts && posts.constructor === Array && posts.length) { ?>
+<? if(locals.page && typeof(page) === 'number') { ?>
+    <h3>Newer posts are on top</h3>
+<? } ?>
 <? posts.forEach((p) => { ?>
 <div class='post'>
     <p>
@@ -19,6 +22,22 @@
 </div>
 
 <? }); ?>
+<? } else { ?>
+    <div>
+        No more posts to show
+    </div>
+<? } ?>
+
+<? if(locals.page && typeof(page) === 'number') { ?>
+    <span class='meta_info'>
+        <? if(page > 1) { ?>
+            <a href='/?new=true&page=<?= page - 1 ?>'>« previous</a>
+        <? } ?>
+        page <?= locals.page ?>
+        <? if(locals.posts && locals.posts.length) { ?>
+            <a href='/?new=true&page=<?= page + 1 ?>'>next »</a>
+        <? } ?>
+    </span>
 <? } ?>
 </span>
 <?- include('./common/layout_post.ejs') ?>
