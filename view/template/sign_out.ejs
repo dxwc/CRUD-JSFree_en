@@ -1,10 +1,13 @@
 <?- include('./common/layout_pre.ejs', { title : 'Sign Out', name : locals.name }) ?>
+<span class='content' >
 <? if(locals.name !== false) { ?>
 <form method='POST' action='/sign_out'>
-    <label>Click the button to confirm you want to sign out:</label>
-    <button class='submit warn' type='submit'>Confirm and Sign Out</button>
+    <h6>Click the button to confirm you want to sign out:
+            <button class='submit warn' type='submit'>Confirm and Sign Out</button>
+    </h6>
 </form>
 <? } else { ?>
-    You are not signed in.
+    <h6>You are not signed in</h6>
 <? } ?>
+</span>
 <?- include('./common/layout_post.ejs') ?>

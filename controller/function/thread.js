@@ -4,7 +4,7 @@ function a_comment(id, content, commenter, post_id, created_at, name)
 {
     return content ? `<ul id='${id}' class='comment'>
 <li>
-    <p>${content}</p>
+    ${content}
     <span class='meta_info'>
     <a href='/user/${commenter}'>${commenter}</a> ${created_at}
     <a

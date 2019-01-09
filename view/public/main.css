@@ -16,6 +16,23 @@ body, body *
     font-size: calc(16px + 1vw);
 }
 
+* li
+{
+    padding: 0 30px;
+    list-style-position: inside;
+}
+
+.comments li
+{
+    padding: 0;
+}
+
+.comments p::after li
+{
+    padding: 0 30px;
+    list-style-position: inside;
+}
+
 body
 {
     left: 0;
@@ -204,12 +221,12 @@ h4 { font-size: 1.5em; }
 h5 { font-size: 1.3em; }
 h6 { font-size: 1.2em; }
 
-.profile h1,
-.profile h2,
-.profile h3,
-.profile h4,
-.profile h5,
-.profile h6,
+.profile h1, .content h1,
+.profile h2, .content h2,
+.profile h3, .content h3,
+.profile h4, .content h4,
+.profile h5, .content h5,
+.profile h6, .content h6,
 .profile form
 {
     text-align: center;
@@ -218,4 +235,14 @@ h6 { font-size: 1.2em; }
 .profile table, .profile form
 {
     margin: 0 auto;
+}
+
+.read h1,
+.read h2,
+.read h3,
+.read h4,
+.read h5,
+.read h6
+{
+    text-align: left !important;
 }
