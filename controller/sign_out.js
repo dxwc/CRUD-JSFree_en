@@ -9,6 +9,7 @@ router.get('/sign_out', (req, res) =>
 router.post('/sign_out', (req, res) =>
 {
     req.logOut();
+    res.setHeader('Cache-Control', 'no-cache');
     return res.redirect(req.session.previous ? req.session.previous : '/');
 });
 

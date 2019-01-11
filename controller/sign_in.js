@@ -70,7 +70,8 @@ router.post('/sign_in', (req, res) =>
                     else
                     {
                         delete req.session.captcha_solution;
-                        return res.status(200).redirect
+                        res.setHeader('Cache-Control', 'no-cache');
+                        return res.redirect
                         (req.session.previous ? req.session.previous : '/');
                     }
                 });

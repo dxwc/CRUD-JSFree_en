@@ -102,6 +102,7 @@ router.post('/sign_up', (req, res) =>
                         else
                         {
                             delete req.session.captcha_solution;
+                            res.setHeader('Cache-Control', 'no-cache');
                             return res.status(200).redirect
                             (req.session.previous ? req.session.previous : '/');
                         }
