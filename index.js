@@ -2,6 +2,22 @@ const express  = require('express');
 const app      = express();
 const passport = require('./controller/middleware/auth.js');
 const session  = require('express-session');
+const helmet   = require('helmet');
+
+app.use(helmet());
+app.use
+(
+    helmet.contentSecurityPolicy
+    ({
+        directives:
+        {
+            defaultSrc: ["'self'"],
+            styleSrc: ["'self'"],
+            scriptSrc: ["'self'"]
+        },
+        browserSniff : false
+    })
+);
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
