@@ -21,6 +21,10 @@ One way to browse and manipulate data :
     + `\q` to quit
 
 # Sequelize sync create log dump :
+
+__Note:__ Need not create them manually, the web application will create the necessary
+tables.
+
 ```
 CREATE TABLE IF NOT EXISTS "users" ("id" UUID , "uname" TEXT NOT NULL UNIQUE, "upass" TEXT NOT NULL, "createdAt" TIMESTAMP WITH TIME ZONE NOT NULL, "updatedAt" TIMESTAMP WITH TIME ZONE NOT NULL, PRIMARY KEY ("id"));
 
