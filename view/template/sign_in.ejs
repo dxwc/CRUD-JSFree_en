@@ -9,7 +9,6 @@
             placeholder='user name'
             minlength='1'
             maxlength='30'
-            autocomplete='off'
             <? if(locals.user_name){ ?>
             value='<?= user_name ?>'
             <? } ?>
@@ -22,7 +21,6 @@
             type='password'
             placeholder='password'
             minlength='1'
-            autocomplete='off'
             <? if(locals.password) { ?>
             value='<?= password ?>'
             <? } ?>
