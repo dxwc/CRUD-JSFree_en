@@ -247,3 +247,8 @@ h6 { font-size: 1.2em; }
 {
     text-align: left !important;
 }
+
+.warn_text
+{
+    color: red;
+}
