@@ -145,6 +145,12 @@ textarea
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
+    height: calc(2rem + 25vw);
+}
+
+textarea[name="comment_w"]
+{
+    height: calc(1rem + 7vw);
 }
 
 footer
