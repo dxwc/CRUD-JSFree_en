@@ -9,6 +9,8 @@ let img      = require('../controller/function/img.js');
 
 md.disable('link');
 md.disable('image');
+md.disable('normalize');
+md.enable('newline');
 
 function ready(input)
 {
