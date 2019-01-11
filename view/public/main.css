@@ -42,11 +42,6 @@ body
     background: #fcefd1;
 }
 
-input[type='image']
-{
-    border: none;
-}
-
 .content
 {
     float: none;
@@ -84,7 +79,7 @@ nav *, footer *, .content form, .inline
     text-decoration : none;
 }
 
-nav a
+nav a, footer a, input[type='image']
 {
     border: none;
 }
