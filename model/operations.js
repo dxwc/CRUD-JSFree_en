@@ -296,7 +296,26 @@ function delete_report(id)
 
 function read_reports()
 {
-    return model.report.findAll()
+    return model.sequelize.query
+    (
+        `
+        SELECT
+            reports.id,
+            users.uname AS by,
+            users.id AS by_id,
+            reports.content,
+            reports.response
+        FROM
+            reports
+                INNER JOIN
+            users
+        ON
+            users.id = reports.by;
+        `,
+        {
+            type: model.sequelize.QueryTypes.SELECT,
+        }
+    )
     .then((res) =>
     {
         if(!res || res.constructor !== Array) return;

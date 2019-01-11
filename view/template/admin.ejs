@@ -3,11 +3,11 @@
 <? if(locals.admin !== true) { ?>
 <h1>For use by authorized personnel only</h1>
 <form method='post' action='/check'>
-    <input name='user_name' type='text'><br>
-    <input name='password' type='password'><br>
+    <input placeholder='admin username' name='user_name' type='text'><br>
+    <input placeholder='admin password' name='password' type='password'><br>
     <?- svg ?><br>
-    <input name='captcha' type='text'><br>
-    <button type='submit'>Enter</button>
+    <input placeholder='enter captcha' name='captcha' type='text'><br>
+    <button class='submit' type='submit'>Enter</button>
 </form>
 <br>
 DO NOT ATTEMPT TO SIGN IN IF YOU ARE NOT AUTHORIZED. ANY ATTEMPT MAY BE LOGGED
@@ -17,12 +17,15 @@ OR REPORTED WITH ASSUMTION OF CRIMINAL INTENT.
 <? reports.forEach((r) => { ?>
 <div class='report' style='border: 1px solid #000; padding : 1%; margin: 1%;'>
     <?- r.content ?><br>
-    By: <?= r.by ?>
+    <span class='meta_info'>
+    By: <a href='/user/<?= r.by ?>'><?= r.by ?></a>
+    <div><?= r.by_id ?></div>
+    </span>
 </div>
 <? }) ?>
 <? } ?>
 <form method='POST' action='/check_out'>
-    <button type='submit'>Admin Sign Out</button>
+    <button class='submit warn' type='submit'>Admin Sign Out</button>
 </form>
 <? } ?>
 <?- include('./common/layout_post.ejs') ?>
