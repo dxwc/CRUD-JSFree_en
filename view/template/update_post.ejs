@@ -37,6 +37,9 @@
     <input type='hidden' name='username' value='<?= by ?>'>
     <button type='submit'>Delete</button>
 </form>
+<form method='GET' action='/post/<?= id ?>'>
+    <button class='submit' type='submit'>Go back to post</button>
+</form>
 <? } else { ?>
     You must be signed in and author of the post to edit it
 <? } ?>
